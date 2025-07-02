@@ -2,12 +2,12 @@
 	"1.1.1": [
 		{
 			"helper": "outline",
-			"selector": "img:not(a[href] img, button img), [role='img']:not(a [role='img'], button [role='img']), [role='link']",
+			"selector": "img:not(a[href] img, [role='link'] img, button img, [role='button'] img), [role='img']:not(a [role='img'], [role='link'] [role='img'], button [role='img'], [role='button'] [role='img'])",
 			"showTag": true
 		},
 		{
 			"helper": "showAttributes",
-			"selector": "img:not(a[href] img, button img), [role='img']:not(a [role='img'], button [role='img']), [role='link']",
+			"selector": "img:not(a[href] img, [role='link'] img, button img, [role='button'] img), [role='img']:not(a [role='img'], [role='link'] [role='img'], button [role='img'], [role='button'] [role='img'])",
 			"attributes": [
 				"aria-labelledby",
 				"aria-label",
