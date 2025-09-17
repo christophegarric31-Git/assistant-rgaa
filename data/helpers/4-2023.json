@@ -2,19 +2,26 @@
 	"1.1.1": [
 		{
 			"helper": "outline",
-			"selector": "img:not(a[href] img, button img), [role='img']:not(a [role='img'], button [role='img']), [role='link']",
+			"selector": "img:not(a img, button img, [role='link'] img, [role='link'], [role='button'] img), [role='img']:not(a [role='img'], button [role='img'], [role='link'] [role='img'], [role='button'] [role='img'])",
 			"showTag": true
 		},
 		{
 			"helper": "showAttributes",
-			"selector": "img:not(a[href] img, button img), [role='img']:not(a [role='img'], button [role='img']), [role='link']",
+			"selector": "img:not(a img, button img, [role='link'] img, [role='link'], [role='button'] img), [role='img']:not(a [role='img'], button [role='img'], [role='link'] [role='img'], [role='button'] [role='img'])",
 			"attributes": [
 				"aria-labelledby",
 				"aria-label",
-				"alt",
 				"title",
 				"role",
-				"aria-hidden"
+				"aria-hidden",
+				"hidden"
+			]
+		},
+		{
+			"helper": "showAttributes",
+			"selector": "img:not(a img, button img, [role='link'] img, [role='link'], [role='button'] img), [role='img']:not(a [role='img'], button [role='img'], [role='link'] [role='img'], [role='button'] [role='img'])",
+			"attributes": [
+				"alt"
 			],
 			"showMissing": true
 		}
@@ -48,7 +55,7 @@
 		{
 			"helper": "showAttributes",
 			"selector": "input[type=\"image\"]",
-			"attributes": ["aria-hidden", "role"]
+			"attributes": ["aria-hidden", "hidden", "role"]
 		}
 	],
 	"1.1.4": [
@@ -60,26 +67,43 @@
 		{
 			"helper": "showAttributes",
 			"selector": "a[href]:has(img[ismap])",
-			"attributes": ["href", "aria-hidden", "role"]
+			"attributes": ["href", "aria-hidden", "hidden", "role"]
 		}
 	],
 	"1.1.5": [
 		{
 			"helper": "outline",
-			"selector": "svg:not(a[href] svg, button svg)",
-			"showTag": true
+			"selector": "svg:not(a svg, button svg, [role='link'] svg, [role='link'], [role='button'] svg, [role='button'])",
+			"showTag":true
+		},
+		{
+			"helper": "showElement",
+			"selector": "svg:not(a svg, button svg, [role='link'] svg, [role='link'], [role='button'] svg, [role='button'])",
+			"attributes": [
+				"role",
+				"title",
+				"aria-label",
+				"aria-labelledby"
+			],
+			"showMissingAttributes":true
 		},
 		{
 			"helper": "showChildElements",
-			"selector": "svg:not(a[href] svg, button svg)",
-			"childrenSelector": "title",
-			"attributes": ["role", "aria-label", "aria-labelledby"],
-			"showMissingAttributes": true
+			"selector": "svg:not(a svg, button svg, [role='link'] svg, [role='link'], [role='button'] svg, [role='button'])",
+			"childrenSelector": "title, text",
+			"attributes": [
+
+			],
+			"showContent":true
 		},
 		{
 			"helper": "showAttributes",
-			"selector": "svg:not(a[href] svg, button svg)",
-			"attributes": ["aria-hidden", "role"]
+			"selector": "svg:not(a svg, button svg, [role='link'] svg, [role='link'], [role='button'] svg, [role='button'])",
+			"attributes": [
+				"aria-hidden",
+				"hidden",
+				"role"
+			]
 		}
 	],
 	"1.1.6": [
@@ -95,7 +119,8 @@
 				"aria-labelledby",
 				"aria-label",
 				"title",
-				"aria-hidden",
+				"aria-hidden", 
+				"hidden",
 				"type"
 			]
 		},
@@ -119,7 +144,8 @@
 				"aria-labelledby",
 				"aria-label",
 				"title",
-				"aria-hidden",
+				"aria-hidden", 
+				"hidden",
 				"type"
 			]
 		},
@@ -139,7 +165,7 @@
 		{
 			"helper": "showAttributes",
 			"selector": "canvas",
-			"attributes": ["aria-labelledby", "aria-label", "aria-hidden"]
+			"attributes": ["aria-labelledby", "aria-label", "aria-hidden", "hidden"]
 		},
 		{
 			"helper": "showAttributes",
@@ -151,11 +177,12 @@
 	"1.2.1": [
 		{
 			"helper": "outline",
-			"selector": "img:not(a[href] img, button img, figure img)"
+			"selector": "img:not(a img, button img, [role='link'] img, [role='link'], [role='button'] img, [role='buton']), [role='img']:not(a [role='img'], button [role='img'], [role='link'] [role='img'], [role='button'] [role='img'])",
+			"showTag": true
 		},
 		{
 			"helper": "showAttributes",
-			"selector": "img",
+			"selector": "img:not(a img, button img, [role='link'] img, [role='link'], [role='button'] img, [role='buton']), [role='img']:not(a [role='img'], button [role='img'], [role='link'] [role='img'], [role='button'] [role='img'])",
 			"attributes": [
 				"alt",
 				"title",
@@ -163,7 +190,8 @@
 				"aria-label",
 				"aria-describedby",
 				"aria-labelledby",
-				"aria-hidden"
+				"aria-hidden",
+				"hidden"
 			]
 		}
 	],
@@ -177,7 +205,7 @@
 			"helper": "showChildElements",
 			"selector": "map",
 			"childrenSelector": "area:not([href])",
-			"attributes": ["alt", "role", "aria-hidden"],
+			"attributes": ["alt", "role", "aria-hidden", "hidden"],
 			"showMissingAttributes": true
 		}
 	],
@@ -190,23 +218,24 @@
 		{
 			"helper": "showAttributes",
 			"selector": "object[type^=\"image\"]",
-			"attributes": ["aria-hidden"],
-			"showMissing": true
+			"attributes": ["aria-hidden", "hidden"],
+			"showMissingAttributes":true
 		},
 		{
 			"helper": "showAttributes",
 			"selector": "object[type^=\"image\"]",
-			"attributes": ["title", "aria-label", "aria-labelledby"]
+			"attributes": ["title", "aria-label", "aria-labelledby", "role"]
 		},
 		{
 			"helper": "showChildElements",
 			"selector": "object[type^=\"image\"]",
 			"childrenSelector": "*",
 			"attributes": [
+				"title",
 				"aria-label",
-				"aria-describedby",
 				"aria-labelledby",
-				"title"
+				"aria-describedby",
+				"role"
 			],
 			"showContent": true
 		}
@@ -214,26 +243,19 @@
 	"1.2.4": [
 		{
 			"helper": "outline",
-			"selector": "svg:not(a[href] svg, button svg)",
+			"selector": "svg:not(a svg, button svg, [role='link'] svg, [role='link'], [role='button'] svg, [role='button'])",
 			"showTag": true
 		},
 		{
 			"helper": "showElement",
-			"selector": "svg:not(a[href] svg, button svg)",
-			"attributes": ["aria-hidden", "role"],
-			"showMissingAttributes": true
-		},
-		{
-			"helper": "showElement",
-			"selector": "svg:not(a[href] svg, button svg)",
-			"attributes": ["aria-label", "aria-labelledby", "title"]
+			"selector": "svg:not(a svg, button svg, [role='link'] svg, [role='link'], [role='button'] svg, [role='button'])",
+			"attributes": ["aria-hidden", "hidden", "role", "aria-label", "aria-labelledby", "title"]
 		},
 		{
 			"helper": "showChildElements",
-			"selector": "svg:not(a[href] svg, button svg)",
+			"selector": "svg:not(a svg, button svg, [role='link'] svg, [role='link'], [role='button'] svg, [role='button'])",
 			"childrenSelector": "title, desc, text",
-			"attributes": ["aria-label", "aria-labelledby", "title"],
-			"showMissingAttributes": true,
+			"attributes": ["aria-hidden", "hidden", "role", "aria-label", "aria-labelledby", "title"],
 			"showContent": true
 		}
 	],
@@ -246,7 +268,7 @@
 		{
 			"helper": "showElement",
 			"selector": "canvas",
-			"attributes": ["aria-hidden", "role"],
+			"attributes": ["aria-hidden", "hidden", "role"],
 			"showMissingAttributes": true
 		},
 		{
@@ -271,7 +293,7 @@
 		{
 			"helper": "showElement",
 			"selector": "embed",
-			"attributes": ["aria-hidden", "role"],
+			"attributes": ["aria-hidden", "hidden", "role"],
 			"showMissingAttributes": true
 		},
 		{
@@ -289,18 +311,20 @@
 	"1.3.1": [
 		{
 			"helper": "outline",
-			"selector": "img:not(a[href] img, button img), [role='img']:not(a [role='img'], button [role='img'])"
+			"selector": "img:not(a img, button img, [role='link'] img, [role='button'] img, [role='link'], [role='button']), [role='img']:not(a [role='img'], button [role='img'], [role='link'] [role='img'], [role='button'] [role='img'])",
+			"showTag": true
 		},
 		{
 			"helper": "showAttributes",
-			"selector": "img:not(a[href] img, button img), [role='img']:not(a [role='img'], button [role='img'])",
-			"attributes": ["alt", "title", "aria-label", "aria-labelledby"]
+			"selector": "img:not(a img, button img, [role='link'] img, [role='button'] img, [role='link'], [role='button']), [role='img']:not(a [role='img'], button [role='img'], [role='link'] [role='img'], [role='button'] [role='img'])",
+			"attributes": ["alt", "title", "aria-label", "aria-labelledby", "role"]
 		}
 	],
 	"1.3.2": [
 		{
 			"helper": "outline",
-			"selector": "map"
+			"selector": "map",
+			"showTag": true
 		},
 		{
 			"helper": "showChildElements",
@@ -313,7 +337,8 @@
 	"1.3.3": [
 		{
 			"helper": "outline",
-			"selector": "input[type=\"image\"][alt]"
+			"selector": "input[type=\"image\"][alt]",
+			"showTag": true
 		},
 		{
 			"helper": "showAttributes",
@@ -324,7 +349,8 @@
 	"1.3.4": [
 		{
 			"helper": "outline",
-			"selector": "object[type^=\"image\"][title], object[type^=\"image\"][aria-label], object[type^=\"image\"][aria-labelledby]"
+			"selector": "object[type^=\"image\"][title], object[type^=\"image\"][aria-label], object[type^=\"image\"][aria-labelledby]",
+			"showTag": true
 		},
 		{
 			"helper": "showAttributes",
@@ -335,7 +361,8 @@
 	"1.3.5": [
 		{
 			"helper": "outline",
-			"selector": "embed[type^=\"image\"][title], embed[type^=\"image\"][aria-label], embed[type^=\"image\"][aria-labelledby]"
+			"selector": "embed[type^=\"image\"][title], embed[type^=\"image\"][aria-label], embed[type^=\"image\"][aria-labelledby]",
+			"showTag": true
 		},
 		{
 			"helper": "showAttributes",
@@ -366,7 +393,8 @@
 	"1.3.7": [
 		{
 			"helper": "outline",
-			"selector": "canvas"
+			"selector": "canvas",
+			"showTag": true
 		},
 		{
 			"helper": "showElement",
@@ -378,7 +406,8 @@
 	"1.3.8": [
 		{
 			"helper": "outline",
-			"selector": "canvas[title], canvas[aria-label], canvas[aria-labelledby]"
+			"selector": "canvas[title], canvas[aria-label], canvas[aria-labelledby]",
+			"showTag": true
 		},
 		{
 			"helper": "showAttributes",
@@ -431,11 +460,12 @@
 	"1.4.1": [
 		{
 			"helper": "outline",
-			"selector": "img[alt]"
+			"selector": "img, [role=\"img\"]",
+			"showTag": true
 		},
 		{
 			"helper": "showAttributes",
-			"selector": "img[alt]",
+			"selector": "img, [role=\"img\"]",
 			"attributes": ["alt", "title", "aria-label", "aria-labelledby"]
 		}
 	],
@@ -456,7 +486,8 @@
 	"1.4.3": [
 		{
 			"helper": "outline",
-			"selector": "input[type=\"image\"][alt]"
+			"selector": "input[type=\"image\"][alt]",
+			"showTag": true
 		},
 		{
 			"helper": "showAttributes",
@@ -467,13 +498,15 @@
 	"1.4.4": [
 		{
 			"helper": "outline",
-			"selector": "object[type^=\"image\"]"
+			"selector": "object[type^=\"image\"]",
+			"showTag": true
 		}
 	],
 	"1.4.5": [
 		{
 			"helper": "outline",
-			"selector": "object[type^=\"image\"][title], object[type^=\"image\"][aria-label], object[type^=\"image\"][aria-labelledby]"
+			"selector": "object[type^=\"image\"][title], object[type^=\"image\"][aria-label], object[type^=\"image\"][aria-labelledby]",
+			"showTag": true
 		},
 		{
 			"helper": "showAttributes",
@@ -484,13 +517,15 @@
 	"1.4.6": [
 		{
 			"helper": "outline",
-			"selector": "embed[type^=\"image\"]"
+			"selector": "embed[type^=\"image\"]",
+			"showTag": true
 		}
 	],
 	"1.4.7": [
 		{
 			"helper": "outline",
-			"selector": "embed[type^=\"image\"][title], embed[type^=\"image\"][aria-label], embed[type^=\"image\"][aria-labelledby]"
+			"selector": "embed[type^=\"image\"][title], embed[type^=\"image\"][aria-label], embed[type^=\"image\"][aria-labelledby]",
+			"showTag": true
 		},
 		{
 			"helper": "showAttributes",
@@ -501,7 +536,7 @@
 	"1.5.1": [
 		{
 			"helper": "outline",
-			"selector": "img, area, object, embed, svg, canvas",
+			"selector": "img, area, object, embed, svg, canvas, [role=\"img\"]",
 			"showTag": true
 		}
 	],
@@ -515,14 +550,22 @@
 	"1.6.1": [
 		{
 			"helper": "outline",
-			"selector": "img",
+			"selector": "img, [role=\"img\"]",
 			"showTag": true
 		},
 		{
 			"helper": "showAttributes",
-			"selector": "img",
-			"attributes": ["alt", "longdesc"],
-			"showMissing": true
+			"selector": "img, [role=\"img\"]",
+			"attributes": [
+				"longdesc",
+				"aria-labelledby",
+				"aria-label",
+				"alt",
+				"title",
+				"role",
+				"aria-hidden",
+				"hidden"
+			]
 		}
 	],
 	"1.6.2": [
@@ -530,6 +573,19 @@
 			"helper": "outline",
 			"selector": "object[type^=\"image\"]",
 			"showTag": true
+		},
+		{
+			"helper": "showAttributes",
+			"selector": "object[type^=\"image\"]",
+			"attributes": [
+				"longdesc",
+				"aria-labelledby",
+				"aria-label",
+				"title",
+				"role",
+				"aria-hidden",
+				"hidden"
+			]
 		}
 	],
 	"1.6.3": [
@@ -537,6 +593,19 @@
 			"helper": "outline",
 			"selector": "embed[type^=\"image\"]",
 			"showTag": true
+		},
+		{
+			"helper": "showAttributes",
+			"selector": "embed[type^=\"image\"]",
+			"attributes": [
+				"longdesc",
+				"aria-labelledby",
+				"aria-label",
+				"title",
+				"role",
+				"aria-hidden",
+				"hidden"
+			]
 		}
 	],
 	"1.6.4": [
@@ -548,20 +617,34 @@
 		{
 			"helper": "showAttributes",
 			"selector": "input[type=\"image\"]",
-			"attributes": ["alt", "aria-describedby"],
-			"showMissing": true
+			"attributes": [
+				"longdesc",
+				"aria-labelledby",
+				"aria-label",
+				"alt",
+				"role",
+				"aria-hidden",
+				"hidden"
+			]
 		}
 	],
 	"1.6.5": [
 		{
 			"helper": "outline",
-			"selector": "input[type=\"image\"][aria-describedby]",
+			"selector": "svg:not(a[href] svg, button svg)",
 			"showTag": true
 		},
 		{
 			"helper": "showAttributes",
-			"selector": "input[type=\"image\"][aria-describedby]",
-			"attributes": ["alt", "aria-describedby"]
+			"selector": "svg:not(a[href] svg, button svg)",
+			"attributes": [
+				"aria-labelledby",
+				"aria-describedby",
+				"aria-label",
+				"role",
+				"aria-hidden",
+				"hidden"
+			]
 		}
 	],
 	"1.6.6": [
@@ -573,12 +656,19 @@
 		{
 			"helper": "showAttributes",
 			"selector": "svg:not(a[href] svg, button svg)",
-			"attributes": ["aria-label"]
+			"attributes": [
+				"aria-labelledby",
+				"aria-describedby",
+				"aria-label",
+				"role",
+				"aria-hidden",
+				"hidden"
+			]
 		},
 		{
 			"helper": "showChildElements",
 			"selector": "svg:not(a[href] svg, button svg)",
-			"childrenSelector": "title, desc",
+			"childrenSelector": "title, text, desc",
 			"attributes": [],
 			"showContent": true
 		}
@@ -586,20 +676,25 @@
 	"1.6.7": [
 		{
 			"helper": "outline",
-			"selector": "svg:not(a[href] svg, button svg):has(desc), svg:not(a svg, button svg)[aria-label]",
+			"selector": "canvas",
 			"showTag": true
 		},
 		{
-			"helper": "showAttributes",
-			"selector": "svg:not(a[href] svg, button svg)[aria-label]",
-			"attributes": ["aria-label"]
-		},
-		{
-			"helper": "showChildElements",
-			"selector": "svg:not(a[href] svg, button svg):has(title)",
-			"childrenSelector": "title",
+			"helper": "showElement",
+			"selector": "canvas",
 			"attributes": [],
 			"showContent": true
+		},
+		{
+			"helper": "showAttributes",
+			"selector": "canvas",
+			"attributes": [
+				"aria-labelledby",
+				"aria-label",
+				"role",
+				"aria-hidden",
+				"hidden"
+			]
 		}
 	],
 	"1.6.8": [
@@ -613,31 +708,41 @@
 			"selector": "canvas",
 			"attributes": [],
 			"showContent": true
+		},
+		{
+			"helper": "showAttributes",
+			"selector": "canvas",
+			"attributes": [
+				"aria-labelledby",
+				"aria-label",
+				"role",
+				"aria-hidden",
+				"hidden"
+			]
 		}
 	],
 	"1.6.9": [
 		{
 			"helper": "outline",
-			"selector": "canvas",
+			"selector": "img[aria-describedby], area[aria-describedby], object[type^=\"image\"][aria-describedby], embed[type^=\"image\"][aria-describedby], svg[aria-describedby], canvas[aria-describedby], [role=\"img\"][aria-describedby]",
 			"showTag": true
 		},
 		{
-			"helper": "showElement",
-			"selector": "canvas",
-			"attributes": [],
-			"showContent": true
+			"helper": "showAttributes",
+			"selector": "img[aria-describedby], area[aria-describedby], object[type^=\"image\"][aria-describedby], embed[type^=\"image\"][aria-describedby], svg[aria-describedby], canvas[aria-describedby], [role=\"img\"][aria-describedby]",
+			"attributes": ["aria-describedby"]
 		}
 	],
 	"1.6.10": [
 		{
 			"helper": "outline",
-			"selector": "img[alt][aria-describedby], area[alt][aria-describedby], object[type^=\"image\"][aria-describedby], embed[type^=\"image\"][aria-describedby], svg[aria-describedby], canvas[aria-describedby]",
+			"selector": "[role=\"img\"]",
 			"showTag": true
 		},
 		{
 			"helper": "showAttributes",
-			"selector": "img[alt][aria-describedby], area[alt][aria-describedby], object[type^=\"image\"][aria-describedby], embed[type^=\"image\"][aria-describedby], svg[aria-describedby], canvas[aria-describedby]",
-			"attributes": ["aria-describedby"]
+			"selector": "[role=\"img\"]",
+			"attributes": ["role", "aria-label", "aria-labelledby", "aria-describedby"]
 		}
 	],
 	"1.7.1": [
@@ -735,7 +840,7 @@
 	"1.8.1": [
 		{
 			"helper": "outline",
-			"selector": "img",
+			"selector": "img, [role=\"img\"]",
 			"showTag": true
 		}
 	],
@@ -776,141 +881,105 @@
 		{
 			"helper": "showChildElements",
 			"selector": "svg",
-			"childrenSelector": "text",
+			"childrenSelector": "title, desc, text",
 			"showContent": true
 		}
 	],
-	"1.9.1": [
-		{
-			"helper": "showElement",
-			"selector": "img, input[type=\"image\"]",
-			"attributes": ["alt"],
-			"showMissingAttributes": true
-		},
+	"1.9.1": [		
 		{
 			"helper": "outline",
-			"selector": "figure:has(img, input[type=\"image\"])"
+			"selector": "figure:has(img, input[type=\"image\"], [role=\"img\"]), figure:has(img, input[type=\"image\"], [role=\"img\"]) figcaption",
+			"showTag": true
 		},
 		{
 			"helper": "showElement",
-			"selector": "figure:has(img, input[type=\"image\"])",
+			"selector": "figure:has(img, input[type=\"image\"], [role=\"img\"])",
 			"attributes": ["role", "aria-label"],
 			"showMissingAttributes": true
-		},
-		{
-			"helper": "outline",
-			"selector": "figure:has(img, input[type=\"image\"]) figcaption",
-			"showTag": true
 		}
 	],
 	"1.9.2": [
 		{
-			"helper": "showElement",
-			"selector": "object[type^=\"image\"]",
-			"attributes": ["type"]
-		},
-		{
 			"helper": "outline",
-			"selector": "figure:has(object[type^=\"image\"])"
+			"selector": "figure:has(object[type^=\"image\"]), figure:has(object[type^=\"image\"]) figcaption",
+			"showTag": true
 		},
 		{
 			"helper": "showElement",
 			"selector": "figure:has(object[type^=\"image\"])",
 			"attributes": ["role", "aria-label"],
 			"showMissingAttributes": true
-		},
-		{
-			"helper": "outline",
-			"selector": "figure:has(object[type^=\"image\"]) figcaption",
-			"showTag": true
 		}
 	],
 	"1.9.3": [
 		{
-			"helper": "showElement",
-			"selector": "embed",
-			"attributes": ["aria-label", "aria-labelledby"],
-			"showEmpty": true
-		},
-		{
 			"helper": "outline",
-			"selector": "figure:has(embed)"
+			"selector": "figure:has(embed[type^=\"image\"]), figure:has(embed[type^=\"image\"]) figcaption",
+			"showTag": true
 		},
 		{
 			"helper": "showElement",
-			"selector": "figure:has(embed)",
+			"selector": "figure:has(embed[type^=\"image\"])",
 			"attributes": ["role", "aria-label"],
 			"showMissingAttributes": true
-		},
-		{
-			"helper": "outline",
-			"selector": "figure:has(embed) figcaption",
-			"showTag": true
 		}
 	],
 	"1.9.4": [
 		{
-			"helper": "showElement",
-			"selector": "svg",
-			"attributes": ["aria-label"],
-			"showMissingAttributes": true
-		},
-		{
-			"helper": "showChildElements",
-			"selector": "svg:has(title)",
-			"childrenSelector": "title",
-			"attributes": [],
-			"showContent": true
-		},
-		{
 			"helper": "outline",
-			"selector": "figure:has(svg)"
+			"selector": "figure:has(svg), figure:has(svg) figcaption",
+			"showTag": true
 		},
 		{
 			"helper": "showElement",
 			"selector": "figure:has(svg)",
 			"attributes": ["role", "aria-label"],
 			"showMissingAttributes": true
-		},
-		{
-			"helper": "outline",
-			"selector": "figure:has(svg) figcaption",
-			"showTag": true
 		}
 	],
 	"1.9.5": [
 		{
+			"helper": "outline",
+			"selector": "figure:has(canvas), figure:has(canvas) figcaption",
+			"showTag": true
+		},
+		{
 			"helper": "showElement",
-			"selector": "canvas",
+			"selector": "figure:has(canvas:not(a canvas, button canvas, [role='link'] canvas, [role='link'], [role='button'] canvas, [role='button']))",
 			"attributes": [],
 			"showContent": true,
 			"showEmpty": true
-		},
-		{
-			"helper": "outline",
-			"selector": "figure:has(canvas)"
 		},
 		{
 			"helper": "showElement",
 			"selector": "figure:has(canvas)",
 			"attributes": ["role", "aria-label"],
 			"showMissingAttributes": true
-		},
-		{
-			"helper": "outline",
-			"selector": "figure:has(canvas) figcaption",
-			"showTag": true
 		}
 	],
 	"2.1.1": [
 		{
 			"helper": "outline",
-			"selector": "iframe, frame"
+			"selector": "iframe, frame",
+			"showTag": true
 		},
 		{
 			"helper": "showAttributes",
 			"selector": "iframe, frame",
-			"attributes": ["title"]
+			"attributes": [
+				"title",
+				"src"
+			],
+			"showMissingAttributes":true
+		},
+		{
+			"helper": "showAttributes",
+			"selector": "iframe, frame",
+			"attributes": [
+				"aria-hidden",
+				"hidden",
+				"role"
+			]
 		}
 	],
 	"2.2.1": [
@@ -922,7 +991,20 @@
 		{
 			"helper": "showAttributes",
 			"selector": "iframe, frame",
-			"attributes": ["title"]
+			"attributes": [
+				"title",
+				"src"
+			],
+			"showMissingAttributes":true
+		},
+		{
+			"helper": "showAttributes",
+			"selector": "iframe, frame",
+			"attributes": [
+				"aria-hidden",
+				"hidden",
+				"role"
+			]
 		}
 	],
 	"3.1.1": [],
@@ -1226,20 +1308,25 @@
 		{
 			"helper": "showChildElements",
 			"selector": "table",
-			"childrenSelector": "& > caption",
+			"childrenSelector": " > caption",
 			"attributes": [],
 			"showContent": true
 		},
 		{
 			"helper": "showAttributes",
 			"selector": "table",
-			"attributes": ["summary", "aria-describedby"],
+			"attributes": [
+				"summary",
+				"aria-describedby"
+			],
 			"showMissing": true
 		},
 		{
 			"helper": "showAttributes",
 			"selector": "[role='table']",
-			"attributes": ["aria-describedby"],
+			"attributes": [
+				"aria-describedby"
+			],
 			"showMissing": true
 		},
 		{
@@ -1266,7 +1353,7 @@
 		{
 			"helper": "showChildElements",
 			"selector": "table",
-			"childrenSelector": "& > caption",
+			"childrenSelector": " > caption",
 			"attributes": [],
 			"showContent": true
 		},
@@ -1319,7 +1406,7 @@
 		{
 			"helper": "showChildElements",
 			"selector": "table",
-			"childrenSelector": "& > caption",
+			"childrenSelector": " > caption",
 			"attributes": [],
 			"showContent": true
 		},
@@ -1349,7 +1436,7 @@
 		{
 			"helper": "showChildElements",
 			"selector": "table",
-			"childrenSelector": "& > caption",
+			"childrenSelector": " > caption",
 			"attributes": [],
 			"showContent": true
 		},
@@ -1521,7 +1608,7 @@
 		{
 			"helper": "showChildElements",
 			"selector": "table",
-			"childrenSelector": "& > caption",
+			"childrenSelector": " > caption",
 			"attributes": [],
 			"showContent": true
 		},
@@ -1574,64 +1661,66 @@
 	"6.1.1": [
 		{
 			"helper": "outline",
-			"selector": "a[href]:not([role]), [role='link']",
+			"selector": "a[href]:not([role]):not(:has(img, canvas, embed, object, svg, [role='img'])), [role='link']:not(:has(img, canvas, embed, object, svg, [role='img']))",
 			"showTag": true
 		},
 		{
 			"helper": "showElement",
-			"selector": "a[href]:not([role]), [role='link']",
-			"attributes": ["title", "aria-label", "aria-labelledby"]
+			"selector": "a[href]:not([role]):not(:has(img, canvas, embed, object, svg, [role='img'])), [role='link']:not(:has(img, canvas, embed, object, svg, [role='img']))",
+			"attributes": ["title", "aria-label", "aria-labelledby", "role", "aria-hidden",	"hidden"]
 		}
 	],
 	"6.1.2": [
 		{
 			"helper": "outline",
-			"selector": "a[href]:not([role]), [role='link'], img[usemap], a[href]:not([role]) canvas, [role='link'] canvas, a[href]:not([role]) object, [role='link'] object, a[href]:not([role]) embed, [role='link'] embed, a[href]:not([role]) svg, [role='link'] svg"
+			"selector": "a[href]:not([role]):has(img), a[href]:not([role]):has(canvas), a[href]:not([role]):has(embed), a[href]:not([role]):has(object), a[href]:not([role]):has(svg), a[href]:not([role]):has([role='img']), [role='link']:has(img), [role='link']:has(canvas), [role='link']:has(embed), [role='link']:has(object), [role='link']:has(svg), [role='link']:has([role='img'])",
+			"showTag": true
 		},
 		{
 			"helper": "showElement",
-			"selector": "a[href]:not([role]), [role='link']",
-			"attributes": ["title", "aria-label", "aria-labelledby"]
+			"selector": "a[href]:not([role]):has(img), a[href]:not([role]):has(canvas), a[href]:not([role]):has(embed), a[href]:not([role]):has(object), a[href]:not([role]):has(svg), a[href]:not([role]):has([role='img']), [role='link']:has(img), [role='link']:has(canvas), [role='link']:has(embed), [role='link']:has(object), [role='link']:has(svg), [role='link']:has([role='img'])",
+			"attributes": ["title", "aria-label", "aria-labelledby", "role", "aria-hidden",	"hidden"]
 		},
 		{
 			"helper": "showElement",
-			"selector": "a[href]:not([role]) img, [role='link'] img, area[href]",
-			"attributes": ["alt", "title", "aria-label", "aria-labelledby"]
+			"selector": "a[href]:not([role]) img, [role='link'] img, a[href]:not([role]) [role='img'], [role='link'] [role='img'], area[href]",
+			"attributes": ["alt", "title", "aria-label", "aria-labelledby", "role", "aria-hidden",	"hidden"]
 		},
 		{
 			"helper": "showChildElements",
 			"selector": "a[href]:not([role]) svg, [role='link'] svg",
-			"childrenSelector": "desc, text",
+			"childrenSelector": "title, desc, text",
 			"attributes": [],
 			"showContent": true
 		},
 		{
 			"helper": "showElement",
 			"selector": "a[href]:not([role]) object, [role='link'] object, a[href]:not([role]) embed, [role='link'] embed",
-			"attributes": ["title", "aria-label", "aria-labelledby"],
+			"attributes": ["title", "aria-label", "aria-labelledby", "role", "aria-hidden",	"hidden"],
 			"showContent": true
 		},
 		{
 			"helper": "showElement",
 			"selector": "a[href]:not([role]) svg, [role='link'] svg, a[href]:not([role]) canvas, [role='link'] canvas",
-			"attributes": ["aria-label", "aria-labelledby"],
+			"attributes": ["aria-label", "aria-labelledby", "role", "aria-hidden",	"hidden"],
 			"showContent": true
 		}
 	],
 	"6.1.3": [
 		{
 			"helper": "outline",
-			"selector": "a[href]:not([role]), [role='link'], img[usemap], a[href]:not([role]) canvas, [role='link'] canvas, a[href]:not([role]) object, [role='link'] object, a[href]:not([role]) embed, [role='link'] embed, a[href]:not([role]) svg, [role='link'] svg"
+			"selector": "a[href]:not([role]), [role='link']",
+			"showTag":true
 		},
 		{
 			"helper": "showElement",
 			"selector": "a[href]:not([role]), [role='link']",
-			"attributes": ["title", "aria-label", "aria-labelledby"]
+			"attributes": ["title", "aria-label", "aria-labelledby", "role", "aria-hidden",	"hidden"]
 		},
 		{
 			"helper": "showElement",
 			"selector": "a[href]:not([role]) img, [role='link'] img, area[href]",
-			"attributes": ["alt", "title", "aria-label", "aria-labelledby"]
+			"attributes": ["alt", "title", "aria-label", "aria-labelledby", "role", "aria-hidden",	"hidden"]
 		},
 		{
 			"helper": "showChildElements",
@@ -1643,7 +1732,7 @@
 		{
 			"helper": "showElement",
 			"selector": "a[href]:not([role]) object, [role='link'] object, a[href]:not([role]) embed, [role='link'] embed",
-			"attributes": ["title", "aria-label", "aria-labelledby"],
+			"attributes": ["title", "aria-label", "aria-labelledby", "role", "aria-hidden",	"hidden"],
 			"showContent": true
 		},
 		{
@@ -1670,39 +1759,69 @@
 				"aria-label",
 				"aria-labelledby",
 				"xlink:href",
-				"x-link:title"
+				"x-link:title",
+				"role", 
+				"aria-hidden",	
+				"hidden"
 			]
 		}
 	],
 	"6.2.1": [
 		{
 			"helper": "outline",
-			"selector": "a[href]:not([role]), [role='link']"
+			"selector": "a[href]:not([role]), [role='link']",
+			"showTag":true
 		},
 		{
 			"helper": "showElement",
 			"selector": "a[href]:not([role]), [role='link']",
-			"attributes": ["aria-label", "aria-labelledby"]
-		},
+			"attributes": [
+				"aria-label",
+				"aria-labelledby",
+				"title",
+				"role"
+			]
+		}, 
 		{
 			"helper": "showElement",
 			"selector": "a[href]:not([role]) img, [role='link'] img, area[href]",
-			"attributes": ["alt"]
+			"attributes": [
+				"alt"
+			],
+			"showMissingAttributes":true
+		},
+		{
+			"helper": "showElement",
+			"selector": "a[href]:not([role]) img, [role='link'] img, a[href]:not([role]) [role='img'], [role='link'] [role='img']",
+			"attributes": [
+				"role",
+				"aria-label",
+				"aria-labelledby",
+				"title", 
+				"alt", 
+				"aria-hidden",
+				"hidden"
+			]
 		},
 		{
 			"helper": "showElement",
 			"selector": "a[href]:not([role]) svg, [role='link'] svg",
-			"attributes": ["aria-label"]
+			"attributes": [
+				"aria-label",
+				"role",
+				"aria-hidden",
+				"hidden"
+			]
 		}
 	],
 	"7.1.1": [
 		{
 			"helper": "outline",
-			"selector": "[role], a[href^='javascript:void(0);']"
+			"selector": "[role], a[href^='javascript:void(0);'], [onclick], [onchange]"
 		},
 		{
 			"helper": "showElement",
-			"selector": "[role], a[href^='javascript:void(0);'], [aria-atomic], [aria-busy], [aria-current], [aria-controls], [aria-describedat], [aria-describedby], [aria-disabled], [aria-dropeffect], [aria-flowto], [aria-grabbed], [aria-haspopup], [aria-invalid], [aria-live], [aria-owns], [aria-autocomplete], [aria-checked], [aria-expanded], [aria-hidden='true'], [aria-label], [aria-level], [aria-multiline], [aria-multiselectable], [aria-orientation], [aria-pressed], [aria-readonly], [aria-required], [aria-selected], [aria-sort], [aria-valuemax], [aria-valuemin], [aria-valuenow], [aria-valuetext], [aria-relevant], [aria-modal]",
+			"selector": "[role], a[href^='javascript:void(0);'], [aria-atomic], [aria-busy], [aria-current], [aria-controls], [aria-describedat], [aria-describedby], [aria-disabled], [aria-dropeffect], [aria-flowto], [aria-grabbed], [aria-haspopup], [aria-invalid], [aria-live], [aria-owns], [aria-autocomplete], [aria-checked], [aria-expanded], [aria-hidden='true'], [aria-label], [aria-level], [aria-multiline], [aria-multiselectable], [aria-orientation], [aria-pressed], [aria-readonly], [aria-required], [aria-selected], [aria-sort], [aria-valuemax], [aria-valuemin], [aria-valuenow], [aria-valuetext], [aria-relevant], [aria-modal], [popover], [popovertarget], dialog",
 			"attributes": [
 				"role",
 				"title",
@@ -1739,11 +1858,18 @@
 				"aria-valuenow",
 				"aria-valuetext",
 				"aria-relevant",
-				"aria-modal"
+				"aria-modal", 
+				"popover", 
+				"popovertarget"
 			]
 		}
 	],
 	"7.5.1": [
+		{
+			"helper": "outline",
+			"selector": "[role='status'], [aria-live='polite']",
+			"showTag":true
+		},
 		{
 			"helper": "showElement",
 			"selector": "[role='status'], [aria-live='polite']",
@@ -1752,15 +1878,25 @@
 	],
 	"7.5.2": [
 		{
+			"helper": "outline",
+			"selector": "[role='alert'], [aria-live='polite'], [aria-live='assertive']",
+			"showTag":true
+		},
+		{
 			"helper": "showElement",
-			"selector": "[role='log'], [role='progressbar'], [role='status'], [aria-live='polite']",
+			"selector": "[role='alert'], [aria-live='polite'], [aria-live='assertive']",
 			"attributes": ["role", "aria-live", "aria-atomic"]
 		}
 	],
 	"7.5.3": [
 		{
+			"helper": "outline",
+			"selector": "[role='log'], [role='progressbar'], [role='status'], [aria-live='polite']",
+			"showTag":true
+		},
+		{
 			"helper": "showElement",
-			"selector": "[role='status'], [aria-live='polite']",
+			"selector": "[role='log'], [role='progressbar'], [role='status'], [aria-live='polite']",
 			"attributes": ["role", "aria-live", "aria-atomic"]
 		}
 	],
@@ -1840,7 +1976,7 @@
 	"8.9.1": [
 		{
 			"helper": "outline",
-			"selector": "h1, h2, h3, h4, h5, h6, p, p:empty, li, blockquote",
+			"selector": "h1, h2, h3, h4, h5, h6, p, p:empty, li, blockquote, br, q, [role='presentation']",
 			"showTag": true
 		},
 		{
@@ -1906,7 +2042,7 @@
 	"9.2.1": [
 		{
 			"helper": "outline",
-			"selector": "header, nav, main, footer",
+			"selector": "header, nav, main, footer, aside, search, section, [role='banner'], [role='complementary'], [role='contentinfo'], [role='main'], [role='nav'], [role='region'], [role='search']",
 			"showTag": true
 		},
 		{
@@ -1919,39 +2055,45 @@
 	"9.3.1": [
 		{
 			"helper": "outline",
-			"selector": "ul, ul li",
-			"showTag": true
+			"selector": "ul:not([role]), ul:not([role]) li:not([role])",
+			"showTag":true
 		},
 		{
 			"helper": "outline",
-			"selector": "[role='list'], [role='list'] [role='listitem']"
+			"selector": "[role='list'], [role='list'] [role='listitem']",
+			"showTag":true
 		},
 		{
 			"helper": "showAttributes",
 			"selector": "[role='list'], [role='list'] [role='listitem']",
-			"attributes": ["role"]
+			"attributes": [
+				"role"
+			]
 		}
 	],
 	"9.3.2": [
 		{
 			"helper": "outline",
-			"selector": "ol, ol li",
-			"showTag": true
+			"selector": "ol:not([role]), ol:not([role]) li:not([role])",
+			"showTag":true
 		},
 		{
 			"helper": "outline",
-			"selector": "[role='list'], [role='list'] [role='listitem']"
+			"selector": "[role='list'], [role='list'] [role='listitem']",
+			"showTag":true
 		},
 		{
 			"helper": "showAttributes",
 			"selector": "[role='list'], [role='list'] [role='listitem']",
-			"attributes": ["role"]
+			"attributes": [
+				"role"
+			]
 		}
 	],
 	"9.3.3": [
 		{
 			"helper": "outline",
-			"selector": "dl,dt,dd",
+			"selector": "dl:not([role]),dt:not([role]),dd:not([role])",
 			"showTag": true
 		}
 	],
@@ -1972,14 +2114,19 @@
 	"10.1.1": [
 		{
 			"helper": "outline",
-			"selector": "basefont, blink, center, font, marquee, s, strike, tt, u",
+			"selector": "basefont, blink, center, font, marquee, s, strike, tt, u, big",
 			"showTag": true
 		}
 	],
 	"10.1.2": [
 		{
+			"helper": "outline",
+			"selector": "[align], [alink], [background], [bgcolor], [border], [cellpadding], [cellspacing], [char], [charoff], [clear], [compact], body [color], [frameborder], [hspace], [link], [marginheight], [marginwidth], [text], [valign], [vlink], [vspace], [size]:not(select), [height]:not(svg):not(canvas):not(embed):not(object):not(img), [width]:not(svg):not(canvas):not(embed):not(object):not(img)",
+			"showTag": true
+		},
+		{
 			"helper": "showElement",
-			"selector": "[align], [alink], [background], [bgcolor], [border], [cellpadding], [cellspacing], [char], [charoff], [clear], [compact], [color], [frameborder], [hspace], [link], [marginheight], [marginwidth], [text], [valign], [vlink], [vspace], [size]:not(select), [height]:not(svg):not(canvas):not(embed):not(object):not(img), [width]:not(svg):not(canvas):not(embed):not(object):not(img)",
+			"selector": "[align], [alink], [background], [bgcolor], [border], [cellpadding], [cellspacing], [char], [charoff], [clear], [compact], body [color], [frameborder], [hspace], [link], [marginheight], [marginwidth], [text], [valign], [vlink], [vspace], [size]:not(select), [height]:not(svg):not(canvas):not(embed):not(object):not(img), [width]:not(svg):not(canvas):not(embed):not(object):not(img)",
 			"attributes": [
 				"align",
 				"alink",
@@ -2111,17 +2258,13 @@
 	"11.1.1": [
 		{
 			"helper": "outline",
-			"selector": "label, input:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select, textarea, output, progress, meter, [role='checkbox'], [role='switch'], [role='radio']"
+			"selector": "label, input:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select, textarea, output, progress, meter, [role='checkbox'], [role='switch'], [role='radio']",
+			"showTag": true
 		},
 		{
 			"helper": "showElement",
 			"selector": "input:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select, textarea, output, progress, meter, [role='checkbox'], [role='switch'], [role='radio']",
-			"attributes": ["title", "aria-label", "aria-labelledby"]
-		},
-		{
-			"helper": "showAttributes",
-			"selector": "[id]",
-			"attributes": ["id"]
+			"attributes": ["title", "aria-label", "aria-labelledby", "id", "role"]
 		},
 		{
 			"helper": "showElement",
@@ -2133,12 +2276,13 @@
 	"11.1.2": [
 		{
 			"helper": "outline",
-			"selector": "label, input:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select, textarea, output, progress, meter, [role='checkbox'], [role='switch'], [role='radio']"
+			"selector": "label, input:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select, textarea, output, progress, meter, [role='checkbox'], [role='switch'], [role='radio']",
+			"showTag": true
 		},
 		{
 			"helper": "showElement",
 			"selector": "input:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select, textarea, output, progress, meter, [role='checkbox'], [role='switch'], [role='radio']",
-			"attributes": ["id"]
+			"attributes": ["id", "role"]
 		},
 		{
 			"helper": "showAttributes",
@@ -2150,12 +2294,13 @@
 	"11.1.3": [
 		{
 			"helper": "outline",
-			"selector": "input[aria-label]:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select[aria-label], textarea[aria-label], output[aria-label], progress[aria-label], meter[aria-label], input[aria-labelledby]:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select[aria-labelledby], textarea[aria-labelledby], output[aria-labelledby], progress[aria-labelledby], meter[aria-labelledby], [role='checkbox'][aria-label], [role='switch'][aria-label], [role='radio'][aria-label], [role='checkbox'][aria-labelledby], [role='switch'][aria-labelledby], [role='radio'][aria-labelledby]"
+			"selector": "input[aria-label]:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select[aria-label], textarea[aria-label], output[aria-label], progress[aria-label], meter[aria-label], input[aria-labelledby]:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select[aria-labelledby], textarea[aria-labelledby], output[aria-labelledby], progress[aria-labelledby], meter[aria-labelledby], [role='checkbox'][aria-label], [role='switch'][aria-label], [role='radio'][aria-label], [role='checkbox'][aria-labelledby], [role='switch'][aria-labelledby], [role='radio'][aria-labelledby]",
+			"showTag": true
 		},
 		{
 			"helper": "showAttributes",
 			"selector": "input[aria-label]:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select[aria-label], textarea[aria-label], output[aria-label], progress[aria-label], meter[aria-label], input[aria-labelledby]:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select[aria-labelledby], textarea[aria-labelledby], output[aria-labelledby], progress[aria-labelledby], meter[aria-labelledby], [role='checkbox'][aria-label], [role='switch'][aria-label], [role='radio'][aria-label], [role='checkbox'][aria-labelledby], [role='switch'][aria-labelledby], [role='radio'][aria-labelledby]",
-			"attributes": ["aria-label", "aria-labelledby", "title"]
+			"attributes": ["aria-label", "aria-labelledby", "title", "role"]
 		},
 		{
 			"helper": "showElement",
@@ -2166,12 +2311,13 @@
 	"11.2.1": [
 		{
 			"helper": "outline",
-			"selector": "label, input:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select, textarea, output, progress, meter, [role='checkbox'], [role='switch'], [role='radio']"
+			"selector": "label, input:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select, textarea, output, progress, meter, [role='checkbox'], [role='switch'], [role='radio']",
+			"showTag":true
 		},
 		{
 			"helper": "showElement",
 			"selector": "input:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select, textarea, output, progress, meter, [role='checkbox'], [role='switch'], [role='radio']",
-			"attributes": ["id"]
+			"attributes": ["id", "role"]
 		},
 		{
 			"helper": "showAttributes",
@@ -2183,45 +2329,49 @@
 	"11.2.2": [
 		{
 			"helper": "outline",
-			"selector": "input[title]:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select[title], textarea[title], output[title], progress[title], meter[title], [role='checkbox'][title], [role='switch'][title], [role='radio'][title]"
+			"selector": "input[title]:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select[title], textarea[title], output[title], progress[title], meter[title], [role='checkbox'][title], [role='switch'][title], [role='radio'][title]",
+			"showTag":true
 		},
 		{
 			"helper": "showElement",
 			"selector": "input[title]:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select[title], textarea[title], output[title], progress[title], meter[title], [role='checkbox'][title], [role='switch'][title], [role='radio'][title]",
-			"attributes": ["title"]
+			"attributes": ["title", "role"]
 		}
 	],
 	"11.2.3": [
 		{
 			"helper": "outline",
-			"selector": "input[aria-label]:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select[aria-label], textarea[aria-label], output[aria-label], progress[aria-label], meter[aria-label], [role='checkbox'][aria-label], [role='switch'][aria-label], [role='radio'][aria-label]"
+			"selector": "input[aria-label]:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select[aria-label], textarea[aria-label], output[aria-label], progress[aria-label], meter[aria-label], [role='checkbox'][aria-label], [role='switch'][aria-label], [role='radio'][aria-label]",
+			"showTag":true
 		},
 		{
 			"helper": "showAttributes",
 			"selector": "input[aria-label]:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select[aria-label], textarea[aria-label], output[aria-label], progress[aria-label], meter[aria-label], [role='checkbox'][aria-label], [role='switch'][aria-label], [role='radio'][aria-label]",
-			"attributes": ["aria-label"]
+			"attributes": ["aria-label", "role"]
 		}
 	],
 	"11.2.4": [
 		{
 			"helper": "outline",
-			"selector": "input[aria-labelledby]:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select[aria-labelledby], textarea[aria-labelledby], output[aria-labelledby], progress[aria-labelledby], meter[aria-labelledby], [role='checkbox'][aria-labelledby], [role='switch'][aria-labelledby], [role='radio'][aria-labelledby]"
+			"selector": "input[aria-labelledby]:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select[aria-labelledby], textarea[aria-labelledby], output[aria-labelledby], progress[aria-labelledby], meter[aria-labelledby], [role='checkbox'][aria-labelledby], [role='switch'][aria-labelledby], [role='radio'][aria-labelledby]",
+			"showTag":true
 		},
 		{
 			"helper": "showElement",
 			"selector": "input[aria-labelledby]:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select[aria-labelledby], textarea[aria-labelledby], output[aria-labelledby], progress[aria-labelledby], meter[aria-labelledby], [role='checkbox'][aria-labelledby], [role='switch'][aria-labelledby], [role='radio'][aria-labelledby]",
-			"attributes": ["aria-labelledby"]
+			"attributes": ["aria-labelledby","role"]
 		}
 	],
 	"11.2.5": [
 		{
 			"helper": "outline",
-			"selector": "input[aria-labelledby]:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select[aria-labelledby], textarea[aria-labelledby], output[aria-labelledby], progress[aria-labelledby], meter[aria-labelledby], [role='checkbox'][aria-labelledby], [role='switch'][aria-labelledby], [role='radio'][aria-labelledby]"
+			"selector": "input[aria-labelledby]:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select[aria-labelledby], textarea[aria-labelledby], output[aria-labelledby], progress[aria-labelledby], meter[aria-labelledby], [role='checkbox'][aria-labelledby], [role='switch'][aria-labelledby], [role='radio'][aria-labelledby]",
+			"showTag":true
 		},
 		{
 			"helper": "showElement",
 			"selector": "input[aria-labelledby]:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select[aria-labelledby], textarea[aria-labelledby], output[aria-labelledby], progress[aria-labelledby], meter[aria-labelledby], [role='checkbox'][aria-labelledby], [role='switch'][aria-labelledby], [role='radio'][aria-labelledby]",
-			"attributes": ["aria-labelledby", "aria-label", "title", "id"]
+			"attributes": ["aria-labelledby", "aria-label", "title", "id","role"]
 		},
 		{
 			"helper": "showAttributes",
@@ -2239,12 +2389,13 @@
 		},
 		{
 			"helper": "outline",
-			"selector": "input:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select, textarea, output, progress, meter, [role='checkbox'], [role='switch'], [role='radio']"
+			"selector": "input:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select, textarea, output, progress, meter, [role='checkbox'], [role='switch'], [role='radio']",
+			"showTag":true
 		},
 		{
 			"helper": "showElement",
 			"selector": "input:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select, textarea, output, progress, meter, [role='checkbox'], [role='switch'], [role='radio']",
-			"attributes": ["title", "aria-label", "aria-labelledby"]
+			"attributes": ["title", "aria-label", "aria-labelledby", "role"]
 		}
 	],
 	"11.3.2": [
@@ -2255,25 +2406,33 @@
 		},
 		{
 			"helper": "outline",
-			"selector": "input:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select, textarea, output, progress, meter, [role='checkbox'], [role='switch'], [role='radio']"
+			"selector": "input:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select, textarea, output, progress, meter, [role='checkbox'], [role='switch'], [role='radio']",
+			"showTag":true
 		},
 		{
 			"helper": "showElement",
 			"selector": "input:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select, textarea, output, progress, meter, [role='checkbox'], [role='switch'], [role='radio']",
-			"attributes": ["title", "aria-label", "aria-labelledby"]
+			"attributes": ["title", "aria-label", "aria-labelledby","role"]
 		}
 	],
 	"11.4.1": [],
 	"11.4.2": [
 		{
 			"helper": "outline",
-			"selector": "input:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='checkbox']):not([type='radio']):not([type='button']), select, textarea, output, progress, meter"
+			"selector": "input:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='checkbox']):not([type='radio']):not([type='button']), select, textarea, output, progress, meter",
+			"showTag": true
 		}
 	],
 	"11.4.3": [
 		{
 			"helper": "outline",
-			"selector": "input[type='radio'], input[type='checkbox'], [role='checkbox'], [role='switch'], [role='radio']"
+			"selector": "input[type='radio'], input[type='checkbox'], [role='checkbox'], [role='switch'], [role='radio']",
+			"showTag": true
+		},
+		{
+			"helper": "showElement",
+			"selector": "input[type='radio'], input[type='checkbox'], [role='checkbox'], [role='switch'], [role='radio']",
+			"attributes": ["role"]
 		}
 	],
 	"11.5.1": [
@@ -2290,7 +2449,8 @@
 		},
 		{
 			"helper": "outline",
-			"selector": "input:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select, textarea, output, progress, meter"
+			"selector": "input:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select, textarea, output, progress, meter",
+			"showTag": true
 		},
 		{
 			"helper": "showElement",
@@ -2339,7 +2499,8 @@
 		},
 		{
 			"helper": "outline",
-			"selector": "input:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select, textarea, output, progress, meter"
+			"selector": "input:not([type='hidden']):not([type='submit']):not([type='reset']):not([type='image']):not([type='button']), select, textarea, output, progress, meter",
+			"showTag": true
 		},
 		{
 			"helper": "showElement",
@@ -2355,13 +2516,20 @@
 	"11.8.1": [
 		{
 			"helper": "outline",
-			"selector": "select"
+			"selector": "select, [role='listbox'], [role='listbox'] [role='group']"
 		},
 		{
 			"helper": "showElement",
 			"selector": "select",
 			"attributes": [],
 			"showEmpty": true
+		},
+		{
+			"helper": "showElement",
+			"selector": "[role='listbox'], [role='group']",
+			"attributes": [
+				"role"
+			]
 		},
 		{
 			"helper": "showChildElements",
@@ -2371,87 +2539,172 @@
 			"showEmpty": true
 		}
 	],
-	"11.8.2": [
+	"11.8.2": [		
 		{
 			"helper": "outline",
-			"selector": "select:has(optgroup)"
+			"selector": "select:has(optgroup), [role='listbox']:has([role='group']), [role='listbox']:has([role='group']) [role='group']"
 		},
 		{
 			"helper": "showElement",
 			"selector": "select:has(optgroup)",
-			"attributes": [],
-			"showEmpty": true
+			"attributes": []
+		},
+		{
+			"helper": "showElement",
+			"selector": "[role='listbox']:has([role='group']), [role='group']",
+			"attributes": [
+				"role",
+				"aria-labelledby",
+				"label"
+			]
 		},
 		{
 			"helper": "showChildElements",
 			"selector": "select:has(optgroup)",
 			"childrenSelector": "optgroup",
-			"attributes": ["label"],
-			"showMissingAttributes": true
+			"attributes": [
+				"label",
+				"aria-labelledby"
+			]
 		}
 	],
-	"11.8.3": [
+	"11.8.3": [		
 		{
 			"helper": "outline",
-			"selector": "select:has(optgroup)"
+			"selector": "select:has(optgroup), [role='listbox']:has([role='group']), [role='listbox']:has([role='group']) [role='group']"
 		},
 		{
 			"helper": "showElement",
 			"selector": "select:has(optgroup)",
-			"attributes": [],
-			"showEmpty": true
+			"attributes": []
+		},
+		{
+			"helper": "showElement",
+			"selector": "[role='listbox']:has([role='group']), [role='group']",
+			"attributes": [
+				"role",
+				"aria-labelledby",
+				"label"
+			]
 		},
 		{
 			"helper": "showChildElements",
 			"selector": "select:has(optgroup)",
 			"childrenSelector": "optgroup",
-			"attributes": ["label"]
+			"attributes": [
+				"label",
+				"aria-labelledby"
+			]
 		}
 	],
 	"11.9.1": [
+		
 		{
 			"helper": "outline",
-			"selector": "button, [type='submit'], [type='reset'], [type='image'], [type='button']"
+			"selector": "button:not([role]), [type='submit'], [type='reset'], [type='image'], [role='button'], [type='button']:not([role])",
+			"showTag":true
+		},
+		{
+			"helper": "outline",
+			"selector": "button:not([role]) *, [type='submit'] *, [type='reset'] *, [type='image'] *, [role='button'] *,[type='button']:not([role]) *",
+			"showTag":true
 		},
 		{
 			"helper": "showElement",
-			"selector": "button, [type='submit'], [type='reset'], [type='image'], [type='button']",
+			"selector": "button:not([role]), [type='submit'], [type='reset'], [type='image'], [role='button'], [type='button']:not([role])",
 			"attributes": [
 				"type",
 				"value",
 				"alt",
 				"title",
 				"aria-label",
-				"aria-labelledby"
+				"aria-labelledby",
+				"role"
 			]
 		},
 		{
-			"helper": "showElement",
-			"selector": "[id]",
-			"attributes": ["id"]
+			"helper": "showChildElements",
+			"selector": "button:not([role]), [type='submit'], [type='reset'], [type='image'], [role='button'], [type='button']:not([role])",
+			"childrenSelector": "img",
+			"attributes": [
+				"aria-label",
+				"aria-labelledby",
+				"alt"
+			],
+			"showMissingAttributes":true
+		},
+		{
+			"helper": "showChildElements",
+			"selector": "button:not([role]), [type='submit'], [type='reset'], [type='image'], [role='button'], [type='button']:not([role])",
+			"childrenSelector": "svg",
+			"attributes": [
+				"aria-label",
+				"aria-labelledby"
+			],
+			"showMissingAttributes":true
+		},
+		{
+			"helper": "showChildElements",
+			"selector": "button:not([role]) svg, [type='submit'] svg, [type='reset'] svg, [type='image'] svg, [role='button'] svg, [type='button']:not([role]) svg",
+			"childrenSelector": "title, desc, text",
+			"attributes": [
+			],
+			"showContent":true
 		}
 	],
 	"11.9.2": [
+		
 		{
 			"helper": "outline",
-			"selector": "button, [type='submit'], [type='reset'], [type='image'], [type='button']"
+			"selector": "button:not([role]), [type='submit'], [type='reset'], [type='image'],[role='button'], [type='button']:not([role])",
+			"showTag":true
+		},
+		{
+			"helper": "outline",
+			"selector": "button:not([role]) *, [type='submit'] *, [type='reset'] *, [type='image'] *,[role='button'] *, [type='button']:not([role]) *",
+			"showTag":true
 		},
 		{
 			"helper": "showElement",
-			"selector": "button, [type='submit'], [type='reset'], [type='image'], [type='button']",
+			"selector": "button:not([role]), [type='submit'], [type='reset'], [type='image'], [role='button'], [type='button']:not([role])",
 			"attributes": [
 				"type",
 				"value",
 				"alt",
 				"title",
 				"aria-label",
-				"aria-labelledby"
+				"aria-labelledby",
+				"role"
 			]
 		},
 		{
-			"helper": "showElement",
-			"selector": "[id]",
-			"attributes": ["id"]
+			"helper": "showChildElements",
+			"selector": "button:not([role]), [type='submit'], [type='reset'], [type='image'],[role='button'], [type='button']:not([role])",
+			"childrenSelector": "img",
+			"attributes": [
+				"aria-label",
+				"aria-labelledby",
+				"alt"
+			],
+			"showMissingAttributes":true
+		},
+		{
+			"helper": "showChildElements",
+			"selector": "button:not([role]), [type='submit'], [type='reset'], [type='image'],[role='button'], [type='button']:not([role])",
+			"childrenSelector": "svg",
+			"attributes": [
+				"aria-label",
+				"aria-labelledby"
+			],
+			"showMissingAttributes":true
+		},
+		{
+			"helper": "showChildElements",
+			"selector": "button:not([role]) svg, [type='submit'] svg, [type='reset'] svg, [type='image'] svg, [role='button'] svg, [type='button']:not([role]) svg",
+			"childrenSelector": "title, desc, text",
+			"attributes": [
+			],
+			"showContent":true
 		}
 	],
 	"11.10.1": [
@@ -2699,6 +2952,19 @@
 			"selector": "[http-equiv='refresh']",
 			"attributes": ["http-equiv", "content"]
 		}
+	],
+	"13.3.1": [
+		{
+			"helper": "outline",
+			"selector": "a[href^='#'], button",
+			"showTag": true
+		},
+		{
+			"helper": "showElement",
+			"selector": "a[href$='.pdf'],a[href$='.doc'],a[href$='.docx'],a[href$='.xls'],a[href$='.xlsx'],a[href$='.ppt'],a[href$='.pptx'],a[href$='.odt'],a[href$='.ods'],a[href$='.odp'],a[href$='.epub']",
+			"attributes": ["href"],
+			"showName": true
+		} 
 	],
 	"13.5.1": [
 		{
