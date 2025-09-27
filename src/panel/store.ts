@@ -33,6 +33,7 @@ const reducer = combineReducers({
 });
 
 export type AppState = ReturnType<typeof reducer>;
+export type RootState = AppState;
 
 export const createStore = () =>
 	configureStore({

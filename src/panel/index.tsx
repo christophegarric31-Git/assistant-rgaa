@@ -10,6 +10,7 @@ import messages from './messages/fr';
 import {loadReference, loadTab, setLoading} from './slices/app';
 import {setTabIds} from './slices/panel';
 import {storeState} from './slices/storage';
+import {loadTestStatusesFromStorage} from './slices/testStatusesActions';
 import {createStore} from './store';
 
 const init = async () => {
@@ -35,6 +36,9 @@ const init = async () => {
 
 	const version = await getOption('referenceVersion');
 	await store.dispatch(loadReference(version)).unwrap();
+
+	// Charger les statuts des tests depuis le storage
+	await store.dispatch(loadTestStatusesFromStorage()).unwrap();
 
 	onTabMount(targetTab.id, () => {
 		store.dispatch(setLoading(true));

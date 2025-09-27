@@ -1,5 +1,6 @@
 import {createSlice, type PayloadAction} from '@reduxjs/toolkit';
 import type {TestStatus} from '../../common/types';
+import {getOption} from '../../options/utils/storage';
 
 type TestStatusesState = {
 	statuses: Record<string, TestStatus>;
@@ -30,6 +31,11 @@ const testStatusesSlice = createSlice({
 
 		clearAllTestStatuses(state) {
 			state.statuses = {};
+		},
+
+		// Action pour charger les statuts depuis le storage
+		loadTestStatuses(state, action: PayloadAction<Record<string, TestStatus>>) {
+			state.statuses = action.payload;
 		}
 	},
 	selectors: {
@@ -44,6 +50,6 @@ const testStatusesSlice = createSlice({
 });
 
 const {actions, reducer, selectors} = testStatusesSlice;
-export const {setTestStatus, clearTestStatus, clearAllTestStatuses} = actions;
+export const {setTestStatus, clearTestStatus, clearAllTestStatuses, loadTestStatuses} = actions;
 export const {selectTestStatus: selectManualTestStatus, selectAllTestStatuses} = selectors;
 export default reducer;

@@ -171,7 +171,7 @@ export const exportAuditResults = createAsyncThunk<
 	const csvHeaders =
 		'Thème;Critère;Sous critère;Libellé du sous critère;Statut\n';
 	const csvRows = auditResult.results
-		.map((result) => {
+		.map((result: TestAuditResult) => {
 			// Récupérer les informations complètes
 			const theme = themes[result.themeId];
 			const criterion = criteria[result.criterionId];

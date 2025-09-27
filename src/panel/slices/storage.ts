@@ -19,7 +19,8 @@ const SKIPPED_SLICES: Array<keyof AppState> = [
 	'helpers',
 	'instructions',
 	'panel',
-	'reference'
+	'reference',
+	'testStatuses'
 ];
 
 // State is keyed by info about the extension, reference,

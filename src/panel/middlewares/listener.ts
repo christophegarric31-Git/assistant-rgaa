@@ -6,6 +6,7 @@ import {addPanelListeners} from '../listeners/panel';
 import {addStorageListeners} from '../listeners/storage';
 import {addStylesListeners} from '../listeners/styles';
 import {addTestsListeners} from '../listeners/tests';
+import {addTestStatusesListeners} from '../listeners/testStatuses';
 import type {AppDispatch, AppState} from '../store';
 
 const listener = createListenerMiddleware();
@@ -25,5 +26,6 @@ addPanelListeners(startListening);
 addStorageListeners(startListening);
 addStylesListeners(startListening);
 addTestsListeners(startListening);
+addTestStatusesListeners(startListening);
 
 export default listener.middleware;
