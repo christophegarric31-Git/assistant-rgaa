@@ -97,12 +97,18 @@ const AuditReport = () => {
 							<summary className="AuditReport-detailsSummary">
 								<h3 className="AuditReport-detailsTitle">Détails par thème</h3>
 								<span className="AuditReport-detailsToggle" aria-hidden="true">
-									{isDetailsExpanded ? '▼' : '▶'}
+									{isDetailsExpanded ? '−' : '+'}
 								</span>
 							</summary>
 							
 							<div className="AuditReport-themesList">
-								{Object.entries(themesData).map(([themeId, themeData]) => {
+								{Object.entries(themesData)
+									.filter(([themeId, themeData]) => {
+										// Filtrer les thèmes qui ont au moins un test évaluable (non-NA)
+										const applicableTests = themeData.results.filter(r => r.overallStatus !== 'NA');
+										return applicableTests.length > 0;
+									})
+									.map(([themeId, themeData]) => {
 									const themeConformTests = themeData.results.filter(r => r.overallStatus === 'OK').length;
 									const themeNonConformTests = themeData.results.filter(r => r.overallStatus === 'FAIL').length;
 									const themeConformityRate = themeConformTests + themeNonConformTests > 0 

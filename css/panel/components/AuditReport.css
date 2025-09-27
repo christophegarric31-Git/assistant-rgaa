@@ -120,14 +120,31 @@
 }
 
 .AuditReport-detailsToggle {
-	font-size: 1rem;
-	color: var(--color-text-secondary);
-	transition: transform 0.2s ease-in-out;
+	font-size: 1.25rem;
+	font-weight: 600;
+	color: #2563eb;
+	transition: all 0.2s ease-in-out;
 	user-select: none;
+	width: 24px;
+	height: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background: #eff6ff;
+	border: 1px solid #bfdbfe;
+}
+
+.AuditReport-detailsSummary:hover .AuditReport-detailsToggle {
+	background: #dbeafe;
+	border-color: #93c5fd;
+	transform: scale(1.1);
 }
 
 .AuditReport-detailsCollapse[open] .AuditReport-detailsToggle {
-	transform: rotate(90deg);
+	background: #dcfce7;
+	border-color: #bbf7d0;
+	color: #166534;
 }
 
 .AuditReport-themesList {
