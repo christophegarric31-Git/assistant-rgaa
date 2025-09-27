@@ -79,16 +79,55 @@
 	color: var(--color-text-primary);
 }
 
-/* Section Détails par Thème */
+/* Section Détails par Thème - Collapsible */
 .AuditReport-details {
 	margin-top: 2rem;
+}
+
+.AuditReport-detailsCollapse {
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+	box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+}
+
+.AuditReport-detailsSummary {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 1.5rem;
+	cursor: pointer;
+	background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+	border-bottom: 1px solid #e2e8f0;
+	transition: background-color 0.2s ease-in-out;
+	list-style: none;
+}
+
+.AuditReport-detailsSummary:hover {
+	background: linear-gradient(135deg, #f1f5f9 0%, #f8fafc 100%);
+}
+
+.AuditReport-detailsSummary::-webkit-details-marker {
+	display: none;
 }
 
 .AuditReport-detailsTitle {
 	font-size: 1.25rem;
 	font-weight: 600;
 	color: var(--color-text-primary);
-	margin: 0 0 1.5rem 0;
+	margin: 0;
+}
+
+.AuditReport-detailsToggle {
+	font-size: 1rem;
+	color: var(--color-text-secondary);
+	transition: transform 0.2s ease-in-out;
+	user-select: none;
+}
+
+.AuditReport-detailsCollapse[open] .AuditReport-detailsToggle {
+	transform: rotate(90deg);
 }
 
 .AuditReport-themesList {
@@ -199,12 +238,83 @@
 
 .AuditReport-moreTests {
 	font-size: 0.75rem;
-	color: var(--color-text-secondary);
-	font-style: italic;
+	color: #2563eb;
+	font-weight: 500;
 	text-align: center;
-	padding: 0.5rem;
-	background: #f1f5f9;
-	border-radius: 4px;
+	padding: 0.75rem;
+	background: #eff6ff;
+	border: 1px solid #bfdbfe;
+	border-radius: 6px;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+	margin-top: 0.5rem;
+}
+
+.AuditReport-moreTests:hover {
+	background: #dbeafe;
+	border-color: #93c5fd;
+	transform: translateY(-1px);
+}
+
+.AuditReport-moreTests:focus {
+	outline: 2px solid #2563eb;
+	outline-offset: 2px;
+}
+
+.AuditReport-moreTests:active {
+	transform: translateY(0);
+}
+
+/* Section Audit Détaillé */
+.AuditReport--detailed {
+	margin-top: 3rem;
+	border-top: 2px solid #e2e8f0;
+	padding-top: 2rem;
+}
+
+.AuditReport-detailedContent {
+	background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+	border-radius: 12px;
+	padding: 2rem;
+	box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+	border: 1px solid #e2e8f0;
+}
+
+.AuditReport-detailedDescription {
+	font-size: 1rem;
+	color: var(--color-text-secondary);
+	line-height: 1.6;
+	margin: 0;
+	text-align: center;
+}
+
+/* Amélioration de l'accessibilité pour les éléments interactifs */
+.AuditReport-detailsSummary:focus {
+	outline: 2px solid #2563eb;
+	outline-offset: -2px;
+}
+
+.AuditReport-detailsSummary:focus-visible {
+	outline: 2px solid #2563eb;
+	outline-offset: -2px;
+}
+
+/* Indicateur visuel pour les éléments collapsibles */
+.AuditReport-detailsSummary::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	width: 4px;
+	background: #2563eb;
+	opacity: 0;
+	transition: opacity 0.2s ease-in-out;
+}
+
+.AuditReport-detailsSummary:focus::before,
+.AuditReport-detailsSummary:hover::before {
+	opacity: 1;
 }
 
 /* Responsive Design */
