@@ -15,6 +15,7 @@ import reference from './slices/reference';
 import {storable} from './slices/storage';
 import styles from './slices/styles';
 import tests from './slices/tests';
+import testStatuses from './slices/testStatuses';
 import themes from './slices/themes';
 
 const reducer = combineReducers({
@@ -27,6 +28,7 @@ const reducer = combineReducers({
 	reference,
 	styles,
 	tests,
+	testStatuses,
 	themes
 });
 

@@ -110,7 +110,7 @@ export const selectHasAuditResults = (state: {audit: AuditState}) =>
 // Sélecteur pour obtenir le statut d'un critère spécifique
 // Combine les résultats d'audit automatique avec l'état des checkboxes manuelles
 export const selectCriterionStatus = (
-	state: {audit: AuditState; tests: {enabledIds: string[]}; reference: any},
+	state: {audit: AuditState; tests: {enabledIds: string[]}; reference: any; testStatuses: {statuses: Record<string, any>}},
 	criterionId: string
 ) => {
 	// Récupérer les résultats d'audit automatique pour ce critère
@@ -142,15 +142,28 @@ export const selectCriterionStatus = (
 		return 'NA';
 	}
 
-	// Sinon, utiliser l'état des checkboxes manuelles
-	// Si des tests sont activés manuellement, considérer comme "en cours" (NC par défaut)
+	// Sinon, utiliser les statuts manuels des tests activés
+	const manualStatuses = enabledTestsForCriterion.map((test: any) => 
+		state.testStatuses.statuses[test.id]
+	).filter(Boolean);
+
+	if (manualStatuses.length > 0) {
+		// Utiliser la logique d'agrégation des statuts
+		if (manualStatuses.includes('NC')) return 'NC';
+		if (manualStatuses.includes('NT')) return 'NT';
+		if (manualStatuses.includes('C')) return 'C';
+		return 'NA';
+	}
+
+	// Si des tests sont activés manuellement mais n'ont pas de statut défini,
+	// considérer comme "en cours" (NC par défaut)
 	return enabledTestsForCriterion.length > 0 ? 'NC' : null;
 };
 
 // Sélecteur pour obtenir le statut d'un test spécifique
 // Combine les résultats d'audit automatique avec les statuts manuels
 export const selectTestStatus = (
-	state: {audit: AuditState; tests: {enabledIds: string[]}},
+	state: {audit: AuditState; tests: {enabledIds: string[]}; testStatuses: {statuses: Record<string, any>}},
 	testId: string
 ) => {
 	// Priorité aux résultats d'audit automatique s'ils existent
@@ -169,17 +182,17 @@ export const selectTestStatus = (
 		}
 	}
 
-	// Si le test est activé manuellement mais n'a pas de résultat d'audit,
+	// Ensuite, vérifier les statuts manuels
+	const manualStatus = state.testStatuses.statuses[testId];
+	if (manualStatus) {
+		return manualStatus;
+	}
+
+	// Si le test est activé manuellement mais n'a pas de statut défini,
 	// considérer comme "Non conforme" par défaut
 	const isManuallyEnabled = state.tests.enabledIds.includes(testId);
 	return isManuallyEnabled ? 'NC' : null;
 };
-
-// Action pour définir le statut d'un test
-export const setTestStatus = (payload: {id: string; status: string}) => ({
-	type: 'audit/setTestStatus',
-	payload
-});
 
 // Action pour réinitialiser les résultats
 export const resetResults = () => ({

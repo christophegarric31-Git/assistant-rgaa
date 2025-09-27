@@ -12,6 +12,8 @@ import {
 } from './audit';
 import {selectInstructionsByTest} from './instructions';
 import {selectAllCriteria, selectAllTests, selectAllThemes} from './reference';
+import {setTestStatus} from './testStatuses';
+import {autoToggleTest} from './tests';
 
 /**
  * Lance un audit complet de tous les tests RGAA
@@ -87,6 +89,26 @@ export const startFullAudit = createAsyncThunk<void, void, {state: RootState}>(
 					);
 					results.push(testResult);
 					dispatch(addTestResult(testResult));
+
+					// Cocher automatiquement la checkbox du test audité
+					dispatch(autoToggleTest({id: test.id, toggle: true}));
+
+					// Définir le statut manuel basé sur le résultat d'audit
+					let manualStatus: 'C' | 'NC' | 'NA' | 'NT';
+					switch (testResult.overallStatus) {
+						case 'OK':
+							manualStatus = 'C';
+							break;
+						case 'FAIL':
+							manualStatus = 'NC';
+							break;
+						case 'NA':
+							manualStatus = 'NA';
+							break;
+						default:
+							manualStatus = 'NC';
+					}
+					dispatch(setTestStatus({id: test.id, status: manualStatus}));
 				} else {
 					console.log(
 						`⚠️ [AUDIT] Pas d'instructions pour ${test.id} - Test ignoré`
