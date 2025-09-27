@@ -1,13 +1,26 @@
 .Criterion {
 	border-bottom: 1px solid var(--color-gutter);
+	margin: 0.5rem 0;
+	border-radius: 12px;
+	overflow: hidden;
+	background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+	transition: all 0.2s ease-in-out;
+}
+
+.Criterion:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .Criterion-header {
 	display: flex;
 	justify-content: space-between;
-	padding: 0;
-	background-color: var(--color-white);
+	padding: 1rem;
+	background: transparent;
 	color: var(--color-black);
+	border-radius: 12px 12px 0 0;
+	transition: background-color 0.2s ease-in-out;
 
 	a {
 		color: var(--color-black);
@@ -25,7 +38,12 @@
 }
 
 .Criterion:nth-child(even) .Criterion-header {
-	background: color-mix(in srgb, var(--color-blue) 5%, transparent);
+	background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(59, 130, 246, 0.02) 100%);
+}
+
+.Criterion.is-open .Criterion-header {
+	background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+	border-bottom: 1px solid rgba(59, 130, 246, 0.2);
 }
 
 .Criterion .Criterion-header:hover {

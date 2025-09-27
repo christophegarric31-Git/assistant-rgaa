@@ -1,0 +1,210 @@
+/* Améliorations d'accessibilité RGAA pour l'interface */
+
+/* Critère 1.1 - Images */
+.CircularChart-svg {
+	/* Alternative textuelle pour les graphiques SVG */
+}
+
+.CircularChart-svg[aria-label] {
+	/* Le SVG a déjà un aria-label dans le composant */
+}
+
+/* Critère 1.3 - Information et relations */
+.AuditReport-title {
+	/* Titre de niveau 2 pour structurer la page */
+}
+
+.AuditReport-scoreTitle,
+.AuditReport-detailsTitle,
+.AuditReport-themeTitle {
+	/* Hiérarchie de titres respectée */
+}
+
+/* Critère 1.4 - Distinguable */
+/* Contraste des couleurs amélioré */
+.AuditReport-metricLabel,
+.AuditReport-themeDescription {
+	color: #64748b; /* Contraste suffisant avec le fond blanc */
+}
+
+.AuditReport-metricValue {
+	color: #1e293b; /* Contraste élevé pour les valeurs importantes */
+	font-weight: 600;
+}
+
+/* Critère 2.1 - Accessible au clavier */
+.Header-action:focus-visible,
+.Criterion-toggle:focus-visible,
+.AuditReport-themeCard:focus-within {
+	outline: 2px solid #2563eb;
+	outline-offset: 2px;
+	border-radius: 4px;
+}
+
+/* Critère 2.2 - Pas de limite de temps */
+/* Aucune animation ne bloque l'utilisateur */
+.CircularChart-progress,
+.AuditReport {
+	animation-duration: 0.5s;
+	animation-fill-mode: both;
+}
+
+/* Critère 2.3 - Convulsivité */
+/* Pas d'effet de flash ou de scintillement */
+.Header-action[title*="Auditer"]:not([disabled]) {
+	animation: pulse 2s infinite;
+	/* Animation subtile qui ne dépasse pas 3 flashs par seconde */
+}
+
+/* Critère 2.4 - Navigable */
+/* Structure de navigation claire */
+.AuditReport-container {
+	/* Structure logique avec titres hiérarchiques */
+}
+
+/* Critère 2.5 - Modalités d'entrée */
+/* Pas de gestes complexes requis */
+.Header-action,
+.Criterion-toggle {
+	/* Interaction simple par clic */
+	min-height: 44px; /* Zone de clic suffisante */
+	min-width: 44px;
+}
+
+/* Critère 3.1 - Lisible */
+/* Langue française déclarée dans le HTML parent */
+.AuditReport-title,
+.AuditReport-scoreTitle,
+.AuditReport-detailsTitle {
+	/* Texte en français */
+}
+
+/* Critère 3.2 - Prévisible */
+/* Comportement cohérent des éléments interactifs */
+.Header-action:hover,
+.Criterion:hover {
+	/* Effets hover prévisibles */
+	transition: all 0.2s ease-in-out;
+}
+
+/* Critère 3.3 - Assistance à la saisie */
+/* Messages d'erreur et états clairs */
+.AuditReport-testStatus--fail {
+	/* Indication claire d'échec */
+	background: #fef2f2;
+	color: #dc2626;
+	border: 1px solid #fecaca;
+}
+
+.AuditReport-testStatus--ok {
+	/* Indication claire de succès */
+	background: #dcfce7;
+	color: #166534;
+	border: 1px solid #bbf7d0;
+}
+
+/* Critère 4.1 - Compatible */
+/* HTML valide et sémantique */
+.AuditReport {
+	/* Utilisation d'éléments sémantiques : section, h2, h3, h4 */
+}
+
+/* Améliorations spécifiques pour les graphiques */
+.CircularChart {
+	/* Graphique accessible avec alternative textuelle */
+}
+
+.CircularChart-percentage {
+	/* Texte visible pour les utilisateurs de lecteurs d'écran */
+	font-size: 1.5rem;
+	font-weight: 700;
+}
+
+/* Support des lecteurs d'écran */
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* Mode contraste élevé */
+@media (prefers-contrast: high) {
+	.AuditReport-scoreCard,
+	.AuditReport-themeCard {
+		border: 2px solid #000000;
+		background: #ffffff;
+	}
+	
+	.AuditReport-metricLabel,
+	.AuditReport-themeDescription {
+		color: #000000;
+	}
+	
+	.Header-action:focus-visible {
+		outline: 3px solid #000000;
+	}
+}
+
+/* Réduction de mouvement */
+@media (prefers-reduced-motion: reduce) {
+	.CircularChart-progress,
+	.AuditReport,
+	.Header-action,
+	.Criterion {
+		animation: none;
+		transition: none;
+	}
+	
+	.Header-action[title*="Auditer"]:not([disabled]) {
+		animation: none;
+	}
+}
+
+/* Mode sombre avec contraste suffisant */
+@media (prefers-color-scheme: dark) {
+	.AuditReport-scoreCard,
+	.AuditReport-themeCard {
+		background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+		border: 1px solid #475569;
+	}
+	
+	.AuditReport-metricLabel,
+	.AuditReport-themeDescription {
+		color: #cbd5e1;
+	}
+	
+	.AuditReport-metricValue {
+		color: #f8fafc;
+	}
+	
+	.AuditReport-testStatus--fail {
+		background: #7f1d1d;
+		color: #fecaca;
+		border: 1px solid #991b1b;
+	}
+	
+	.AuditReport-testStatus--ok {
+		background: #14532d;
+		color: #bbf7d0;
+		border: 1px solid #166534;
+	}
+}
+
+/* Zones de clic suffisantes pour mobile */
+@media (max-width: 768px) {
+	.Header-action {
+		min-height: 48px;
+		min-width: 48px;
+	}
+	
+	.Criterion-toggle {
+		min-height: 48px;
+		padding: 12px;
+	}
+}

@@ -1,0 +1,107 @@
+/* Graphique circulaire */
+.CircularChart {
+	position: relative;
+	display: inline-block;
+}
+
+.CircularChart-svg {
+	display: block;
+}
+
+.CircularChart-background {
+	opacity: 0.3;
+}
+
+.CircularChart-progress {
+	transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.CircularChart-text {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	pointer-events: none;
+}
+
+.CircularChart-percentage {
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: var(--color-text-primary);
+	text-align: center;
+	line-height: 1;
+}
+
+/* Variantes de taille */
+.CircularChart[style*="width: 60px"] .CircularChart-percentage {
+	font-size: 0.875rem;
+}
+
+.CircularChart[style*="width: 80px"] .CircularChart-percentage {
+	font-size: 1rem;
+}
+
+.CircularChart[style*="width: 100px"] .CircularChart-percentage {
+	font-size: 1.25rem;
+}
+
+.CircularChart[style*="width: 120px"] .CircularChart-percentage {
+	font-size: 1.5rem;
+}
+
+/* Animation d'apparition */
+.CircularChart-progress {
+	animation: drawCircle 1s ease-out;
+}
+
+@keyframes drawCircle {
+	from {
+		stroke-dashoffset: 100%;
+	}
+	to {
+		stroke-dashoffset: var(--final-offset);
+	}
+}
+
+/* États de conformité avec couleurs */
+.CircularChart--excellent .CircularChart-progress {
+	stroke: #10b981; /* Vert */
+}
+
+.CircularChart--good .CircularChart-progress {
+	stroke: #3b82f6; /* Bleu */
+}
+
+.CircularChart--average .CircularChart-progress {
+	stroke: #f59e0b; /* Orange */
+}
+
+.CircularChart--poor .CircularChart-progress {
+	stroke: #ef4444; /* Rouge */
+}
+
+/* Accessibilité - Contraste élevé */
+@media (prefers-contrast: high) {
+	.CircularChart-background {
+		stroke: #000000;
+		opacity: 0.5;
+	}
+	
+	.CircularChart-progress {
+		stroke-width: calc(var(--stroke-width) + 2);
+	}
+}
+
+/* Mode sombre */
+@media (prefers-color-scheme: dark) {
+	.CircularChart-percentage {
+		color: #ffffff;
+	}
+	
+	.CircularChart-background {
+		stroke: #374151;
+	}
+}

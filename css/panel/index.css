@@ -32,6 +32,9 @@
 @import url('./components/TestInstructions.css');
 @import url('./components/TestAuditResults.css');
 @import url('./components/AuditProgress.css');
+@import url('./components/AuditReport.css');
+@import url('./components/CircularChart.css');
+@import url('./components/RGAACompliance.css');
 @import url('./components/TestStatuses.css');
 @import url('./components/TestSection.css');
 @import url('./components/TestStatus.css');
