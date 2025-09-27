@@ -8,6 +8,8 @@ import {
 } from 'lucide-react';
 import React from 'react';
 import {useIntl} from 'react-intl';
+import {selectHasAuditResults, selectIsAuditRunning} from '../slices/audit';
+import {exportAuditResults, startFullAudit} from '../slices/auditActions';
 import {openOptionsPage} from '../slices/options';
 import {
 	selectPopupTabId,
@@ -16,8 +18,6 @@ import {
 } from '../slices/panel';
 import {selectVersion} from '../slices/reference';
 import {stateReset} from '../slices/storage';
-import {selectHasAuditResults, selectIsAuditRunning} from '../slices/audit';
-import {startFullAudit, exportAuditResults} from '../slices/auditActions';
 import {useAppDispatch, useAppSelector} from '../utils/hooks';
 import Icon from './Icon';
 import StylesToggle from './StylesToggle';

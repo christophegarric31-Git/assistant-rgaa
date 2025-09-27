@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
-import {useAppSelector} from '../utils/hooks';
 import {selectAuditResults} from '../slices/audit';
+import {useAppSelector} from '../utils/hooks';
 
 type TestInstructionsProps = {
 	id: string;
@@ -18,8 +18,8 @@ function TestInstructions({
 	instructions
 }: TestInstructionsProps) {
 	const auditResults = useAppSelector(selectAuditResults);
-	const testAuditResult = auditResults.find(result => result.testId === id);
-	
+	const testAuditResult = auditResults.find((result) => result.testId === id);
+
 	const containerClass = classNames('TestInstructions', 'TestSection', {
 		'is-open': isOpen
 	});
@@ -51,11 +51,13 @@ function TestInstructions({
 					__html: instructions
 				}}
 			/>
-			
+
 			{testAuditResult && (
 				<div className="TestAuditResults">
 					<h4>Résultats de l'audit automatique</h4>
-					<div className={`TestAuditStatus TestAuditStatus--${testAuditResult.overallStatus.toLowerCase()}`}>
+					<div
+						className={`TestAuditStatus TestAuditStatus--${testAuditResult.overallStatus.toLowerCase()}`}
+					>
 						<span className="TestAuditStatus-icon">
 							{testAuditResult.overallStatus === 'OK' && '✅'}
 							{testAuditResult.overallStatus === 'FAIL' && '❌'}
@@ -67,20 +69,25 @@ function TestInstructions({
 							{testAuditResult.overallStatus === 'NA' && 'Non applicable'}
 						</span>
 					</div>
-					
+
 					{testAuditResult.results.length > 0 && (
 						<div className="TestAuditDetails">
 							<h5>Détails des vérifications :</h5>
 							<ul>
 								{testAuditResult.results.map((result, index) => (
-									<li key={index} className={`TestAuditDetail TestAuditDetail--${result.status.toLowerCase()}`}>
+									<li
+										key={`${result.testId}-${index}`}
+										className={`TestAuditDetail TestAuditDetail--${result.status.toLowerCase()}`}
+									>
 										<div className="TestAuditDetail-header">
 											<span className="TestAuditDetail-icon">
 												{result.status === 'OK' && '✅'}
 												{result.status === 'FAIL' && '❌'}
 												{result.status === 'NA' && '⚠️'}
 											</span>
-											<span className="TestAuditDetail-message">{result.message}</span>
+											<span className="TestAuditDetail-message">
+												{result.message}
+											</span>
 										</div>
 										{result.details && (
 											<div className="TestAuditDetail-details">

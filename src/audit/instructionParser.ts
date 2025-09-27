@@ -3,69 +3,89 @@ import type {AuditInstruction} from './types';
 /**
  * Parse les instructions RGAA pour extraire les étapes automatisables
  */
-export class InstructionParser {
+export const InstructionParser = {
 	/**
 	 * Parse une instruction RGAA et retourne les étapes automatisables
 	 */
-	static parseInstructions(instructionHtml: string): AuditInstruction[] {
+	parseInstructions(instructionHtml: string): AuditInstruction[] {
 		console.log('📖 [PARSER] Début du parsing des instructions HTML');
-		console.log('📖 [PARSER] HTML reçu:', instructionHtml.substring(0, 200) + '...');
-		
+		console.log(
+			'📖 [PARSER] HTML reçu:',
+			`${instructionHtml.substring(0, 200)}...`
+		);
+
 		const instructions: AuditInstruction[] = [];
-		
+
 		// Extraire les listes ordonnées (<ol>) et leurs éléments (<li>)
 		const olRegex = /<ol[^>]*>(.*?)<\/ol>/gs;
 		const liRegex = /<li[^>]*>(.*?)<\/li>/gs;
-		
+
 		const olMatch = instructionHtml.match(olRegex);
 		console.log('📖 [PARSER] Liste ordonnée trouvée:', olMatch ? 'OUI' : 'NON');
-		
+
 		if (!olMatch) {
-			console.log('⚠️ [PARSER] Aucune liste ordonnée trouvée dans les instructions');
+			console.log(
+				'⚠️ [PARSER] Aucune liste ordonnée trouvée dans les instructions'
+			);
 			return instructions;
 		}
-		
+
 		const olContent = olMatch[0];
-		console.log('📖 [PARSER] Contenu de la liste:', olContent.substring(0, 300) + '...');
-		
+		console.log(
+			'📖 [PARSER] Contenu de la liste:',
+			`${olContent.substring(0, 300)}...`
+		);
+
 		let stepNumber = 1;
-		let liMatch;
-		
-		while ((liMatch = liRegex.exec(olContent)) !== null) {
+		let liMatch: RegExpExecArray | null;
+
+		liMatch = liRegex.exec(olContent);
+		while (liMatch !== null) {
 			const stepText = liMatch[1];
-			console.log(`📖 [PARSER] Étape ${stepNumber}:`, stepText.substring(0, 100) + '...');
-			
-			const instruction = this.parseStep(stepText, stepNumber);
+			console.log(
+				`📖 [PARSER] Étape ${stepNumber}:`,
+				`${stepText.substring(0, 100)}...`
+			);
+
+			const instruction = InstructionParser.parseStep(stepText, stepNumber);
 			if (instruction) {
-				console.log(`✅ [PARSER] Instruction automatisable trouvée pour l'étape ${stepNumber}:`, instruction);
+				console.log(
+					`✅ [PARSER] Instruction automatisable trouvée pour l'étape ${stepNumber}:`,
+					instruction
+				);
 				instructions.push(instruction);
 			} else {
-				console.log(`⚠️ [PARSER] Étape ${stepNumber} non automatisable (manuelle)`);
+				console.log(
+					`⚠️ [PARSER] Étape ${stepNumber} non automatisable (manuelle)`
+				);
 			}
 			stepNumber++;
+			liMatch = liRegex.exec(olContent);
 		}
-		
-		console.log(`📖 [PARSER] Parsing terminé - ${instructions.length} instruction(s) automatisable(s) trouvée(s)`);
+
+		console.log(
+			`📖 [PARSER] Parsing terminé - ${instructions.length} instruction(s) automatisable(s) trouvée(s)`
+		);
 		return instructions;
-	}
-	
+	},
+
 	/**
 	 * Parse une étape individuelle pour déterminer si elle est automatisable
 	 */
-	private static parseStep(stepText: string, stepNumber: number): AuditInstruction | null {
-		const cleanText = this.cleanHtml(stepText);
-		
+	parseStep(stepText: string, stepNumber: number): AuditInstruction | null {
+		const cleanText = InstructionParser.cleanHtml(stepText);
+
 		// Déterminer le type de vérification basé sur le contenu
-		const checkType = this.determineCheckType(cleanText);
-		
+		const checkType = InstructionParser.determineCheckType(cleanText);
+
 		if (checkType === 'manual') {
 			return null; // Skip les étapes manuelles
 		}
-		
+
 		// Extraire les sélecteurs et attributs
-		const selector = this.extractSelector(cleanText);
-		const attributes = this.extractAttributes(cleanText);
-		
+		const selector = InstructionParser.extractSelector(cleanText);
+		const attributes = InstructionParser.extractAttributes(cleanText);
+
 		return {
 			step: stepNumber,
 			text: cleanText,
@@ -73,60 +93,82 @@ export class InstructionParser {
 			attributes,
 			checkType
 		};
-	}
-	
+	},
+
 	/**
 	 * Détermine le type de vérification basé sur le texte
 	 */
-	private static determineCheckType(text: string): AuditInstruction['checkType'] {
+	determineCheckType(text: string): AuditInstruction['checkType'] {
 		const lowerText = text.toLowerCase();
-		
+
 		// Vérifications de présence d'éléments
-		if (lowerText.includes('retrouver') || lowerText.includes('vérifier la présence')) {
+		if (
+			lowerText.includes('retrouver') ||
+			lowerText.includes('vérifier la présence')
+		) {
 			return 'presence';
 		}
-		
+
 		// Vérifications d'attributs
-		if (lowerText.includes('attribut') || lowerText.includes('aria-') || lowerText.includes('alt') || lowerText.includes('title')) {
+		if (
+			lowerText.includes('attribut') ||
+			lowerText.includes('aria-') ||
+			lowerText.includes('alt') ||
+			lowerText.includes('title')
+		) {
 			return 'attribute';
 		}
-		
+
 		// Vérifications de contenu
-		if (lowerText.includes('contenu') || lowerText.includes('texte') || lowerText.includes('vide')) {
+		if (
+			lowerText.includes('contenu') ||
+			lowerText.includes('texte') ||
+			lowerText.includes('vide')
+		) {
 			return 'content';
 		}
-		
+
 		// Vérifications de structure
-		if (lowerText.includes('structure') || lowerText.includes('hiérarchie') || lowerText.includes('ordre')) {
+		if (
+			lowerText.includes('structure') ||
+			lowerText.includes('hiérarchie') ||
+			lowerText.includes('ordre')
+		) {
 			return 'structure';
 		}
-		
+
 		// Déterminer si c'est "porteuse d'information" -> manuel
-		if (lowerText.includes('porteuse d\'information') || lowerText.includes('décorative') || lowerText.includes('pertinent')) {
+		if (
+			lowerText.includes("porteuse d'information") ||
+			lowerText.includes('décorative') ||
+			lowerText.includes('pertinent')
+		) {
 			return 'manual';
 		}
-		
+
 		return 'manual';
-	}
-	
+	},
+
 	/**
 	 * Extrait le sélecteur CSS de l'instruction
 	 */
-	private static extractSelector(text: string): string | undefined {
+	extractSelector(text: string): string | undefined {
 		// Rechercher les balises HTML dans le texte
 		const tagRegex = /<(\w+)(?:\s[^>]*)?>/g;
 		const tags: string[] = [];
-		let match;
-		
-		while ((match = tagRegex.exec(text)) !== null) {
+		let match: RegExpExecArray | null;
+
+		match = tagRegex.exec(text);
+		while (match !== null) {
 			const tagName = match[1].toLowerCase();
 			if (!tags.includes(tagName)) {
 				tags.push(tagName);
 			}
+			match = tagRegex.exec(text);
 		}
-		
+
 		if (tags.length === 0) return undefined;
-		
+
 		// Construire le sélecteur basé sur les balises trouvées
 		if (tags.includes('img')) {
 			return 'img:not(a img, button img)';
@@ -185,37 +227,52 @@ export class InstructionParser {
 		if (tags.includes('td')) {
 			return 'td';
 		}
-		
+
 		return tags[0];
-	}
-	
+	},
+
 	/**
 	 * Extrait les attributs à vérifier
 	 */
-	private static extractAttributes(text: string): string[] {
+	extractAttributes(text: string): string[] {
 		const attributes: string[] = [];
 		const lowerText = text.toLowerCase();
-		
+
 		// Liste des attributs courants à vérifier
 		const commonAttributes = [
-			'alt', 'title', 'aria-label', 'aria-labelledby', 'aria-describedby',
-			'role', 'aria-hidden', 'href', 'src', 'type', 'for', 'id', 'name',
-			'placeholder', 'required', 'disabled', 'readonly', 'tabindex'
+			'alt',
+			'title',
+			'aria-label',
+			'aria-labelledby',
+			'aria-describedby',
+			'role',
+			'aria-hidden',
+			'href',
+			'src',
+			'type',
+			'for',
+			'id',
+			'name',
+			'placeholder',
+			'required',
+			'disabled',
+			'readonly',
+			'tabindex'
 		];
-		
+
 		for (const attr of commonAttributes) {
 			if (lowerText.includes(attr)) {
 				attributes.push(attr);
 			}
 		}
-		
+
 		return attributes;
-	}
-	
+	},
+
 	/**
 	 * Nettoie le HTML pour obtenir le texte brut
 	 */
-	private static cleanHtml(html: string): string {
+	cleanHtml(html: string): string {
 		return html
 			.replace(/<[^>]*>/g, '') // Supprimer les balises HTML
 			.replace(/&nbsp;/g, ' ') // Remplacer les espaces insécables
@@ -226,5 +283,4 @@ export class InstructionParser {
 			.replace(/\s+/g, ' ') // Normaliser les espaces
 			.trim();
 	}
-}
-
+};

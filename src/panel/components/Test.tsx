@@ -6,6 +6,7 @@ import {useOption} from '../../options/utils/storage';
 import {selectTestHasHelpers} from '../slices/helpers';
 import {selectInstructionsByTest} from '../slices/instructions';
 import {autoToggleTest, selectIsTestEnabled} from '../slices/tests';
+import {selectAuditResults} from '../slices/audit';
 import {useAppDispatch, useAppSelector} from '../utils/hooks';
 import TestHelpers from './TestHelpers';
 import TestInstructions from './TestInstructions';
@@ -19,7 +20,13 @@ type TestProps = {
 function Test({id, title}: TestProps) {
 	const intl = useIntl();
 	const applicable = useAppSelector((state) => selectTestHasHelpers(state, id));
-	const applied = useAppSelector((state) => selectIsTestEnabled(state, id));
+	const manuallyApplied = useAppSelector((state) => selectIsTestEnabled(state, id));
+	const auditResults = useAppSelector(selectAuditResults);
+	const hasAuditResult = auditResults.some(result => result.testId === id);
+	
+	// Le test est considéré comme "applied" s'il est activé manuellement OU s'il a un résultat d'audit
+	const applied = manuallyApplied || hasAuditResult;
+	
 	const instructions = useAppSelector((state) =>
 		selectInstructionsByTest(state, id)
 	);
@@ -29,7 +36,8 @@ function Test({id, title}: TestProps) {
 	const dispatch = useAppDispatch();
 
 	const handleToggle = () => {
-		const toggle = !applied;
+		// Basculer seulement l'état manuel (checkbox)
+		const toggle = !manuallyApplied;
 		dispatch(autoToggleTest({id, toggle}));
 
 		if (toggle && autoOpenInstructions) {
@@ -73,7 +81,7 @@ function Test({id, title}: TestProps) {
 								<input
 									type="checkbox"
 									id={`test-${id}-apply-input`}
-									checked={applied}
+									checked={manuallyApplied}
 									onChange={handleToggle}
 								/>
 							</label>

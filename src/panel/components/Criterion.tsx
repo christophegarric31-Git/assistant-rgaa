@@ -106,9 +106,7 @@ const Criterion = ({id, level, title}: CriterionProps) => {
 								dangerouslySetInnerHTML={{__html: title}}
 							/>
 							{title.toLowerCase().includes('pertinent') && (
-								<div className="Criterion-aiMention">
-									-- Contrôle IA
-								</div>
+								<div className="Criterion-aiMention">-- Contrôle IA</div>
 							)}
 						</div>
 					</div>

@@ -38,4 +38,3 @@ export interface FullAuditResult {
 		na: number;
 	};
 }
-
