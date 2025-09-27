@@ -1,4 +1,6 @@
 .ReferencePage {
 	position: relative;
-	overflow: hidden auto;
+	overflow-y: auto;
+	overflow-x: hidden;
+	flex: 1;
 }
