@@ -66,6 +66,14 @@
 	display: block;
 }
 
+.Criterion-aiMention {
+	margin-top: 0.25rem;
+	font-size: var(--font-size-small);
+	font-style: italic;
+	color: var(--color-orange);
+	font-weight: 500;
+}
+
 .Criterion-level {
 	position: absolute;
 	top: 0.125lh;

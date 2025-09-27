@@ -1,57 +1,127 @@
-import {
-	type PayloadAction,
-	createSelector,
-	createSlice
-} from '@reduxjs/toolkit';
-import type {AuditResults, Test, TestStatus} from '../../common/types';
-import {aggregateStatuses} from '../utils/tests';
-import {selectTestsByCriterion} from './reference';
+import {createSlice, type PayloadAction} from '@reduxjs/toolkit';
+import type {AuditStatus, FullAuditResult, TestAuditResult} from '../../audit/types';
 
-type AuditState = {
-	results: AuditResults;
-};
+interface AuditState {
+	isRunning: boolean;
+	currentTest: string | null;
+	progress: {
+		current: number;
+		total: number;
+	};
+	results: TestAuditResult[];
+	lastAuditResult: FullAuditResult | null;
+	error: string | null;
+}
 
-const DEFAULT_STATUS: TestStatus = 'NT';
 const initialState: AuditState = {
-	results: {}
+	isRunning: false,
+	currentTest: null,
+	progress: {
+		current: 0,
+		total: 0
+	},
+	results: [],
+	lastAuditResult: null,
+	error: null
 };
 
 const auditSlice = createSlice({
 	name: 'audit',
 	initialState,
 	reducers: {
-		setTestStatus(
-			state,
-			{payload}: PayloadAction<{id: Test['id']; status: TestStatus}>
-		) {
-			state.results[payload.id] = {
-				status: payload.status
+		startAudit: (state, action: PayloadAction<{total: number}>) => {
+			state.isRunning = true;
+			state.currentTest = null;
+			state.progress = {
+				current: 0,
+				total: action.payload.total
 			};
+			state.results = [];
+			state.error = null;
 		},
-		resetResults() {
-			return initialState;
-		}
-	},
-	selectors: {
-		selectAllTestResults(state) {
-			return state.results;
+		
+		setCurrentTest: (state, action: PayloadAction<string>) => {
+			state.currentTest = action.payload;
 		},
-		selectTestStatus(state, id: Test['id']) {
-			return state.results?.[id]?.status || DEFAULT_STATUS;
-		}
+		
+		updateProgress: (state, action: PayloadAction<number>) => {
+			state.progress.current = action.payload;
+		},
+		
+		addTestResult: (state, action: PayloadAction<TestAuditResult>) => {
+			state.results.push(action.payload);
+		},
+		
+		completeAudit: (state, action: PayloadAction<FullAuditResult>) => {
+			state.isRunning = false;
+			state.currentTest = null;
+			state.lastAuditResult = action.payload;
+		},
+		
+		setAuditError: (state, action: PayloadAction<string>) => {
+			state.isRunning = false;
+			state.currentTest = null;
+			state.error = action.payload;
+		},
+		
+		clearAuditResults: (state) => {
+			state.results = [];
+			state.lastAuditResult = null;
+			state.error = null;
+		},
+		
+		resetAudit: () => initialState
 	}
 });
 
-const {actions, reducer, selectors} = auditSlice;
-export const {setTestStatus, resetResults} = actions;
-export const {selectAllTestResults, selectTestStatus} = selectors;
+export const {
+	startAudit,
+	setCurrentTest,
+	updateProgress,
+	addTestResult,
+	completeAudit,
+	setAuditError,
+	clearAuditResults,
+	resetAudit
+} = auditSlice.actions;
 
-export const selectCriterionStatus = createSelector(
-	[selectAllTestResults, selectTestsByCriterion],
-	(results, tests) =>
-		aggregateStatuses(
-			tests.map(({id}) => results?.[id]?.status || DEFAULT_STATUS)
-		)
-);
+export default auditSlice.reducer;
 
-export default reducer;
+// Sélecteurs
+export const selectIsAuditRunning = (state: {audit: AuditState}) => state.audit.isRunning;
+export const selectCurrentTest = (state: {audit: AuditState}) => state.audit.currentTest;
+export const selectAuditProgress = (state: {audit: AuditState}) => state.audit.progress;
+export const selectAuditResults = (state: {audit: AuditState}) => state.audit.results;
+export const selectLastAuditResult = (state: {audit: AuditState}) => state.audit.lastAuditResult;
+export const selectAuditError = (state: {audit: AuditState}) => state.audit.error;
+export const selectHasAuditResults = (state: {audit: AuditState}) => state.audit.results.length > 0;
+
+// Sélecteur pour obtenir le statut d'un critère spécifique
+export const selectCriterionStatus = (state: {audit: AuditState}, criterionId: string) => {
+	const results = state.audit.results.filter(result => result.criterionId === criterionId);
+	if (results.length === 0) return null;
+	
+	const hasFail = results.some(r => r.overallStatus === 'FAIL');
+	const hasOK = results.some(r => r.overallStatus === 'OK');
+	
+	if (hasFail) return 'NC';
+	if (hasOK) return 'C';
+	return 'NA';
+};
+
+// Sélecteur pour obtenir le statut d'un test spécifique
+export const selectTestStatus = (state: {audit: AuditState}, testId: string) => {
+	const result = state.audit.results.find(r => r.testId === testId);
+	return result ? result.overallStatus : null;
+};
+
+// Action pour définir le statut d'un test
+export const setTestStatus = (payload: {id: string; status: string}) => ({
+	type: 'audit/setTestStatus',
+	payload
+});
+
+// Action pour réinitialiser les résultats
+export const resetResults = () => ({
+	type: 'audit/resetResults'
+});

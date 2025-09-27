@@ -2,6 +2,8 @@ import {
 	AppWindowIcon,
 	CircleHelpIcon,
 	DatabaseBackupIcon,
+	DownloadIcon,
+	PlayIcon,
 	SettingsIcon
 } from 'lucide-react';
 import React from 'react';
@@ -14,6 +16,8 @@ import {
 } from '../slices/panel';
 import {selectVersion} from '../slices/reference';
 import {stateReset} from '../slices/storage';
+import {selectHasAuditResults, selectIsAuditRunning} from '../slices/audit';
+import {startFullAudit, exportAuditResults} from '../slices/auditActions';
 import {useAppDispatch, useAppSelector} from '../utils/hooks';
 import Icon from './Icon';
 import StylesToggle from './StylesToggle';
@@ -24,11 +28,15 @@ const Header = () => {
 	const version = useAppSelector(selectVersion);
 	const isPopup = !!useAppSelector(selectPopupTabId);
 	const title = useAppSelector(selectTargetTabTitle);
+	const isAuditRunning = useAppSelector(selectIsAuditRunning);
+	const hasAuditResults = useAppSelector(selectHasAuditResults);
 	const dispatch = useAppDispatch();
 	const resetTitle = intl.formatMessage({id: 'Header.reset'});
 	const popupTitle = intl.formatMessage({id: 'Header.openPopup'});
 	const optionsTitle = intl.formatMessage({id: 'Header.options'});
 	const helpTitle = intl.formatMessage({id: 'Header.help'});
+	const auditTitle = intl.formatMessage({id: 'Header.audit'});
+	const exportTitle = intl.formatMessage({id: 'Header.export'});
 
 	return (
 		<header className="Header Toolbar">
@@ -50,6 +58,32 @@ const Header = () => {
 						<Icon icon={AppWindowIcon} title={popupTitle} />
 					</button>
 				)}
+
+				<button
+					type="button"
+					onClick={() => {
+						console.log('🚀 [HEADER] Bouton audit cliqué');
+						dispatch(startFullAudit());
+					}}
+					className="Header-action InvisibleButton"
+					title={auditTitle}
+					disabled={isAuditRunning}
+				>
+					<Icon icon={PlayIcon} title={auditTitle} />
+				</button>
+
+				{hasAuditResults ? (
+					<button
+						type="button"
+						onClick={() => {
+							dispatch(exportAuditResults());
+						}}
+						className="Header-action InvisibleButton"
+						title={exportTitle}
+					>
+						<Icon icon={DownloadIcon} title={exportTitle} />
+					</button>
+				) : null}
 
 				<button
 					type="button"

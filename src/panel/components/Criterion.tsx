@@ -100,11 +100,17 @@ const Criterion = ({id, level, title}: CriterionProps) => {
 							</span>
 						) : null}
 
-						<div
-							className="Criterion-description"
-							// biome-ignore lint/security/noDangerouslySetInnerHtml :
-							dangerouslySetInnerHTML={{__html: title}}
-						/>
+						<div className="Criterion-description">
+							<div
+								// biome-ignore lint/security/noDangerouslySetInnerHtml :
+								dangerouslySetInnerHTML={{__html: title}}
+							/>
+							{title.toLowerCase().includes('pertinent') && (
+								<div className="Criterion-aiMention">
+									-- Contrôle IA
+								</div>
+							)}
+						</div>
 					</div>
 				</div>
 
