@@ -55,8 +55,8 @@ const AuditReport = () => {
 								<span className="AuditReport-metricValue">{nonConformTests}</span>
 							</div>
 							<div className="AuditReport-metric">
-								<span className="AuditReport-metricLabel">Non applicables :</span>
-								<span className="AuditReport-metricValue">{notApplicableTests}</span>
+								<span className="AuditReport-metricLabel">Total évalué :</span>
+								<span className="AuditReport-metricValue">{conformTests + nonConformTests}</span>
 							</div>
 						</div>
 					</div>
@@ -103,21 +103,23 @@ const AuditReport = () => {
 										Vérification de la conformité RGAA
 									</div>
 									<div className="AuditReport-themeTests">
-										{themeData.results.slice(0, 3).map((result, index) => (
+										{themeData.results
+											.filter(result => result.overallStatus !== 'NA')
+											.slice(0, 3)
+											.map((result, index) => (
 											<div key={result.testId} className="AuditReport-testItem">
 												<span className="AuditReport-testId">{result.testId}</span>
 												<span className="AuditReport-testTitle">
 													{result.testTitle.replace(/<[^>]*>/g, '').substring(0, 50)}...
 												</span>
 												<span className={`AuditReport-testStatus AuditReport-testStatus--${result.overallStatus.toLowerCase()}`}>
-													{result.overallStatus === 'OK' ? 'PASSED' : 
-													 result.overallStatus === 'FAIL' ? 'FAILED' : 'N/A'}
+													{result.overallStatus === 'OK' ? 'PASSED' : 'FAILED'}
 												</span>
 											</div>
 										))}
-										{themeData.results.length > 3 && (
+										{themeData.results.filter(r => r.overallStatus !== 'NA').length > 3 && (
 											<div className="AuditReport-moreTests">
-												+{themeData.results.length - 3} autres tests
+												+{themeData.results.filter(r => r.overallStatus !== 'NA').length - 3} autres tests évalués
 											</div>
 										)}
 									</div>

@@ -107,15 +107,16 @@ const Header = () => {
 					<Icon icon={SettingsIcon} title={optionsTitle} />
 				</button>
 
-				<a
-					className="Header-action Link"
-					href="http://assistant-rgaa.boscop.fr/#fonctionnalites"
-					target="_blank"
+				<button
+					type="button"
+					className="Header-action InvisibleButton"
 					title={helpTitle}
-					rel="noreferrer"
+					onClick={() => {
+						window.open('http://assistant-rgaa.boscop.fr/#fonctionnalites', '_blank', 'noreferrer');
+					}}
 				>
 					<Icon icon={CircleHelpIcon} title={helpTitle} />
-				</a>
+				</button>
 			</div>
 
 			<div className="Toolbar-actions">
